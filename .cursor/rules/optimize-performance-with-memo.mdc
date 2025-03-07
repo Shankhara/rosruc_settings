@@ -1,0 +1,25 @@
+---
+description: Optimise les perfs avec `React.memo`, `useMemo`, ou `useCallback` pour éviter les recalculs inutiles.
+globs: **/*
+alwaysApply: true
+---
+Description : Optimise les perfs avec `React.memo`, `useMemo`, ou `useCallback` pour éviter les recalculs inutiles.  
+
+Détails : Par exemple, wrappe un composant de liste avec `memo` ou mets une fonction dans `useCallback`.  
+
+Exemple :
+Avant :
+```tsx
+function EventItem({ event }) {
+  return <Text>{event.title}</Text>;
+}
+```
+
+Après :
+```tsx
+import { memo } from 'react';
+
+const EventItem = memo(({ event }) => {
+  return <Text>{event.title}</Text>;
+});
+``` 

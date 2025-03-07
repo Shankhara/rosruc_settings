@@ -1,0 +1,33 @@
+---
+description: Vérifie les conditions critiques au début d'une fonction et sors directement si elles échouent, comme un vigile à l'entrée.
+globs: **/*
+alwaysApply: true
+---
+Description : Vérifie les conditions critiques au début d'une fonction et sors directement si elles échouent, comme un vigile à l'entrée.  
+
+Détails : Ça protège le code principal et évite les if/else imbriqués. Par exemple, si un utilisateur est null ou pas admin, retourne un message tout de suite.  
+
+Exemple :
+Avant :
+```tsx
+function getProfile(user, isAdmin) {
+  if (user) {
+    if (isAdmin) {
+      return user.name;
+    } else {
+      return "Pas autorisé";
+    }
+  } else {
+    return "Utilisateur absent";
+  }
+}
+```
+
+Après :
+```tsx
+function getProfile(user, isAdmin) {
+  if (!user) return "Utilisateur absent";
+  if (!isAdmin) return "Pas autorisé";
+  return user.name;
+}
+``` 

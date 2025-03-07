@@ -1,0 +1,27 @@
+---
+description: Type toujours les props et variables avec TypeScript pour éviter les bugs et aider Cursor.
+globs: **/*
+alwaysApply: true
+---
+Description : Type toujours les props et variables avec TypeScript pour éviter les bugs et aider Cursor.  
+
+Détails : Par exemple, passe de `function Button(props)` à `function Button({ size }: { size: number })`.  
+
+Exemple :
+Avant :
+```tsx
+function Button(props) {
+  const size = props.size || 10;
+  return <View style={{ width: size }} />;
+}
+```
+
+Après :
+```tsx
+interface ButtonProps {
+  size?: number;
+}
+
+function Button({ size = 10 }: ButtonProps) {
+  return <View style={{ width: size }} />;
+} 

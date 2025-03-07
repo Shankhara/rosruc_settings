@@ -1,0 +1,34 @@
+---
+description: Évite de répéter du code ou des logiques (DRY : Don't Repeat Yourself) en factorisant dans des variables ou fonctions.
+globs: **/*
+alwaysApply: true
+---
+Description : Évite de répéter du code ou des logiques (DRY : Don't Repeat Yourself) en factorisant dans des variables ou fonctions.  
+
+Détails : Si un message ou une logique apparaît deux fois, crée une constante ou une fonction réutilisable. Ça allège le code et simplifie les mises à jour.  
+
+Exemple :
+Avant :
+```tsx
+function LoginForm({ errorCode }) {
+  if (errorCode === 1) {
+    return <Text>Le mot de passe est incorrect</Text>;
+  }
+  if (errorCode === 2) {
+    return <Text>Le mot de passe est incorrect</Text>;
+  }
+  return <Text>Connexion OK</Text>;
+}
+```
+
+Après :
+```tsx
+const incorrectPasswordMessage = "Le mot de passe est incorrect";
+
+function LoginForm({ errorCode }) {
+  if (errorCode === 1 || errorCode === 2) {
+    return <Text>{incorrectPasswordMessage}</Text>;
+  }
+  return <Text>Connexion OK</Text>;
+}
+``` 

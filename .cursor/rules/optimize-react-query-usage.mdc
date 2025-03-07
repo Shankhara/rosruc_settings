@@ -1,0 +1,28 @@
+---
+description: Utilise React Query intelligemment avec des Query Keys claires, un cache optimisé, et une gestion d'état.
+globs: **/*
+alwaysApply: true
+---
+Description : Utilise React Query intelligemment avec des Query Keys claires, un cache optimisé, et une gestion d'état.  
+
+Détails : Par exemple, utilise `['events', date]` comme clé, configure `staleTime` et `cacheTime`, et évite les tris redondants.  
+
+Exemple :
+Avant :
+```tsx
+const { data } = useQuery({
+  queryKey: ['events'],
+  queryFn: fetchEvents
+});
+```
+
+Après :
+```tsx
+const { data, isLoading, error } = useQuery({
+  queryKey: ['events', date, page],
+  queryFn: () => fetchEvents({ date, page }),
+  staleTime: 5 * 60 * 1000,
+  cacheTime: 10 * 60 * 1000,
+  enabled: !!date
+});
+``` 

@@ -1,0 +1,25 @@
+---
+description: Utilise toujours le thème pour les styles, pas de valeurs codées en dur, et pense en termes de design system.
+globs: **/*
+alwaysApply: true
+---
+Description : Utilise toujours le thème pour les styles, pas de valeurs codées en dur, et pense en termes de design system.  
+
+Détails : Par exemple, prends `theme.color.white` au lieu de `#fff`. Si une valeur manque, propose de l'ajouter à `theme.ts` avec un nom clair (ex. `primary`).  
+
+Exemple :
+Avant :
+```tsx
+const Box = styled.View({
+  backgroundColor: '#ffffff',
+  padding: 16
+});
+```
+
+Après :
+```tsx
+const Box = styled.View({
+  backgroundColor: theme.color.white,
+  padding: theme.spaceSize(2)
+});
+```  

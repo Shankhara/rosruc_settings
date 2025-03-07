@@ -1,0 +1,25 @@
+---
+description: Ne code jamais les textes affichables en dur, utilise l'internationalisation (i18n) avec `<Trans>` ou `t`.
+globs: **/*
+alwaysApply: true
+---
+Description : Ne code jamais les textes affichables en dur, utilise l'internationalisation (i18n) avec `<Trans>` ou `t`.  
+
+Détails : Par exemple, remplace `<Text>Erreur</Text>` par `<Text><Trans>Erreur</Trans></Text>` pour qu'il passe par `messages.po`.  
+
+Exemple :
+Avant :
+```tsx
+function Welcome() {
+  return <Text>Bienvenue</Text>;
+}
+```
+
+Après :
+```tsx
+import { Trans } from '@lingui/macro';
+
+function Welcome() {
+  return <Text><Trans>Bienvenue</Trans></Text>;
+}
+``` 

@@ -1,0 +1,29 @@
+---
+description: Gère toujours les erreurs des appels async avec try/catch ou .catch(), avec un message traduit.
+globs: **/*
+alwaysApply: true
+---
+Description : Gère toujours les erreurs des appels async avec try/catch ou .catch(), avec un message traduit.  
+
+Détails : Ne laisse pas une Promise sans gestion, sinon l'app peut crasher. Par exemple, entoure un fetch d'un try/catch.  
+
+Exemple :
+Avant :
+```tsx
+async function fetchData() {
+  const data = await fetch('api');
+}
+```
+
+Après :
+```tsx
+import { t } from '@lingui/macro';
+
+async function fetchData() {
+  try {
+    const data = await fetch('api');
+    return data;
+  } catch (e) {
+    throw new Error(t`Erreur lors du chargement`);
+  }
+} 

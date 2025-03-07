@@ -1,0 +1,32 @@
+---
+description: Gère les états (loading, success, error) avec une structure centralisée comme un reducer, au lieu de multiples if.
+globs: **/*
+alwaysApply: true
+---
+Description : Gère les états (loading, success, error) avec une structure centralisée comme un reducer, au lieu de multiples if.  
+
+Détails : Ça simplifie les conditions complexes. Par exemple, utilise une table ou un reducer pour gérer les états d'une page.  
+
+Exemple :
+Avant :
+```tsx
+function Page({ status, data }) {
+  if (status === "loading") return <Loader />;
+  if (status === "success" && data) return <List data={data} />;
+  if (status === "error") return <Text>Erreur</Text>;
+  return <Text>Vide</Text>;
+}
+```
+
+Après :
+```tsx
+const renders = {
+  loading: () => <Loader />,
+  success: (data) => data && <List data={data} />,
+  error: () => <Text>Erreur</Text>,
+  empty: () => <Text>Vide</Text>
+};
+
+function Page({ status, data }) {
+  return renders[status]?.(data) || renders.empty();
+} 

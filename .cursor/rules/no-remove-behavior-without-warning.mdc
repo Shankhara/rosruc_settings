@@ -1,0 +1,23 @@
+---
+description: Ne supprime jamais un comportement ou élément existant sans me prévenir et expliquer pourquoi.
+globs: **/*
+alwaysApply: true
+---
+ Description : Ne supprime jamais un comportement ou élément existant sans me prévenir et expliquer pourquoi.  
+
+Détails : Si tu veux enlever un `<StatusBar>` ou un `Provider`, garde-le ou signale-le avec une raison (ex. "semble inutile ici").  
+
+Exemple :
+Avant :
+```tsx
+function App() {
+  return <AuthProvider><StatusBar barStyle="dark-content" /><Content /></AuthProvider>;
+}
+```
+
+Suggestion :
+```tsx
+function App() {
+  return <AuthProvider>{/* Attention : Je propose de supprimer <StatusBar barStyle="dark-content" /> car Expo gère ça dans app.config.ts. Confirme si OK */}<Content /></AuthProvider>;
+}
+``` 

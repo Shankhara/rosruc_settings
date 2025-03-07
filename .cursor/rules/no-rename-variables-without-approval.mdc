@@ -1,0 +1,24 @@
+---
+description: Ne renomme pas mes variables sans mon accord, propose une suggestion avec une explication si besoin.
+globs: **/*
+alwaysApply: true
+---
+Description : Ne renomme pas mes variables sans mon accord, propose une suggestion avec une explication si besoin.  
+
+Détails : Par exemple, si `x` pourrait être `userId`, signale-le sans changer, en expliquant pourquoi (clarté, convention).  
+
+Exemple :
+Avant :
+```tsx
+function getData(x) {
+  return fetch(`/api/${x}`);
+}
+```
+
+Suggestion :
+```tsx
+function getData(x) {
+  // Suggestion : Je propose de renommer `x` en `userId` car c'est plus clair et suit les conventions. Acceptes-tu ?
+  return fetch(`/api/${x}`);
+}
+``` 

@@ -1,0 +1,32 @@
+---
+description: Remplace les if/else ou switch par une table d'objets pour associer des conditions à des valeurs ou fonctions.
+globs: **/*
+alwaysApply: true
+---
+Description : Remplace les if/else ou switch par une table d'objets pour associer des conditions à des valeurs ou fonctions.  
+
+Détails : Ça élimine les comparaisons répétitives et rend le code extensible. Par exemple, pour un statut, utilise un objet au lieu de conditions.  
+
+Exemple :
+Avant :
+```tsx
+function getStatusText(status) {
+  if (status === "loading") return "Chargement";
+  if (status === "success") return "Succès";
+  if (status === "error") return "Erreur";
+  return "Inconnu";
+}
+```
+
+Après :
+```tsx
+function getStatusText(status) {
+  const statusMap = {
+    loading: "Chargement",
+    success: "Succès",
+    error: "Erreur",
+    unknown: "Inconnu"
+  };
+  return statusMap[status] || statusMap.unknown;
+}
+``` 

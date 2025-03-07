@@ -1,0 +1,33 @@
+---
+description: Utilise des retours anticipés pour sortir d'une fonction dès qu'une condition est remplie, au lieu d'empiler des if/else.
+globs: **/*
+alwaysApply: true
+---
+Description : Utilise des retours anticipés pour sortir d'une fonction dès qu'une condition est remplie, au lieu d'empiler des if/else.  
+
+Détails : Ça réduit l'indentation et rend le code plus clair. Par exemple, au lieu de "if (loading) {…} else { if (data) {…} else {…}}", fais "if (loading) return <Loader />; if (!data) return <Erreur />; return <Contenu />;".  
+
+Exemple :
+Avant :
+```tsx
+function showPage(isLoading, data) {
+  if (isLoading) {
+    return <Loader />;
+  } else {
+    if (data) {
+      return <DataView data={data} />;
+    } else {
+      return <Text>Pas de données</Text>;
+    }
+  }
+}
+```
+
+Après :
+```tsx
+function showPage(isLoading, data) {
+  if (isLoading) return <Loader />;
+  if (!data) return <Text>Pas de données</Text>;
+  return <DataView data={data} />;
+}
+``` 

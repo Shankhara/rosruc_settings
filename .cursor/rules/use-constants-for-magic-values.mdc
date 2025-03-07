@@ -1,0 +1,20 @@
+---
+description: Remplace les valeurs magiques (ex. `110`, `#fff`) par des constantes ou des valeurs du thème.
+globs: **/*
+alwaysApply: true
+---
+Description : Remplace les valeurs magiques (ex. `110`, `#fff`) par des constantes ou des valeurs du thème.  
+
+Détails : Par exemple, utilise `const NAV_BAR_OFFSET = 110` au lieu de `paddingBottom: 110` codé en dur.  
+
+Exemple :
+Avant :
+```tsx
+const sectionListStyle = { paddingBottom: 110 };
+```
+
+Après :
+```tsx
+const NAV_BAR_OFFSET = 110;
+const sectionListStyle = { paddingBottom: NAV_BAR_OFFSET };
+``` 

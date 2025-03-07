@@ -1,0 +1,33 @@
+---
+description: Interdis les margins, le parent doit gérer l'espace avec du padding pour une mise en page prévisible.
+globs: **/*
+alwaysApply: true
+---
+Description : Interdis les margins, le parent doit gérer l'espace avec du padding pour une mise en page prévisible.  
+
+Détails : Remplace `marginTop: 10` sur un enfant par `paddingTop` sur le parent, en utilisant le thème.  
+
+Exemple :
+Avant :
+```tsx
+const Button = styled.TouchableOpacity({
+  marginTop: 20,
+  padding: 10
+});
+
+const Container = styled.View({
+  flex: 1
+});
+```
+
+Après :
+```tsx
+const Container = styled.View({
+  flex: 1,
+  paddingTop: theme.spaceSize(3)
+});
+
+const Button = styled.TouchableOpacity({
+  padding: 10
+});
+``` 

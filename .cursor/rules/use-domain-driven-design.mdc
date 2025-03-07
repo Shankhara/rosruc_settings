@@ -1,0 +1,90 @@
+---
+description: Organise le code selon les principes du Domain Driven Design (DDD) avec une architecture modulaire.
+globs: 
+alwaysApply: true
+---
+# Domain Driven Design
+
+## Context
+- Pour toute application de complexité moyenne à élevée
+- Lorsqu'on travaille sur un module fonctionnel avec une logique métier importante
+- Pour maintenir une séparation claire entre les couches applicatives
+
+## Requirements
+- Structurer chaque fonctionnalité/module avec trois dossiers principaux:
+  - Domain: Contient le cœur métier et la logique business (entités, objets valeur, agrégats, services de domaine)
+  - Infra: Gère les communications externes et l'infrastructure (API, base de données, device)
+  - View: Responsable de l'interface utilisateur et de l'affichage
+- Utiliser un langage omniprésent (Ubiquitous Language) reflétant le modèle métier
+- Isoler la logique métier dans le Domain
+- Gérer les accès aux données externes via l'Infrastructure
+- Séparer la présentation dans la View
+- Respecter la responsabilité unique pour chaque couche
+
+## Examples
+<example>
+// Dans features/user/Domain/UserEntity.ts
+export interface UserEntity {
+  id: string;
+  name: string;
+  email: string;
+}
+
+// Dans features/user/Infra/userRepository.ts
+import { UserEntity } from '../Domain/UserEntity';
+
+export const fetchUser = async (id: string): Promise<UserEntity> => {
+  try {
+    const response = await fetch(`/api/users/${id}`);
+    return await response.json();
+  } catch (e) {
+    throw new Error(t`Erreur lors du chargement de l'utilisateur`);
+  }
+};
+
+// Dans features/user/View/UserProfile.tsx
+import { useState, useEffect } from 'react';
+import { UserEntity } from '../Domain/UserEntity';
+import { fetchUser } from '../Infra/userRepository';
+import { Trans } from '@lingui/macro';
+
+export function UserProfile({ userId }: { userId: string }) {
+  const [user, setUser] = useState<UserEntity | null>(null);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    async function loadUser() {
+      try {
+        const userData = await fetchUser(userId);
+        setUser(userData);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    
+    loadUser();
+  }, [userId]);
+  
+  if (loading) return <div><Trans>Chargement...</Trans></div>;
+  if (!user) return <div><Trans>Utilisateur non trouvé</Trans></div>;
+  
+  return <div>{user.name}</div>;
+}
+</example>
+
+<example type="invalid">
+// Tout mélangé dans un seul fichier app/components/User.tsx
+function User() {
+  const [user, setUser] = useState(null);
+  
+  useEffect(() => {
+    fetch('/api/users/1')
+      .then(res => res.json())
+      .then(data => setUser(data));
+  }, []);
+  
+  return <div>{user?.name}</div>;
+}
+</example>  

@@ -1,0 +1,36 @@
+---
+description: TOUJOURS évaluer la pertinence des instructions avant application
+globs: **/*
+---
+
+# Évaluer la Pertinence des Instructions
+
+## Context
+- Lors de la réception d'instructions ou de demandes spécifiques
+- Avant d'implémenter toute demande de modification
+
+## Requirements
+- Analyser si l'instruction est nécessaire (non déjà implémentée ailleurs)
+- Évaluer s'il existe une meilleure approche que celle demandée
+- Vérifier la cohérence avec le reste du code et la structure du projet
+- Suggérer des améliorations ou alternatives si pertinent
+- Expliquer le raisonnement en cas de proposition différente
+
+## Examples
+<example>
+"Concernant votre demande d'ajouter une fonction de validation d'email, j'ai remarqué que:
+1. Une fonction similaire existe déjà dans `utils/validators.ts`
+2. Plutôt que de créer une nouvelle fonction, nous pourrions réutiliser celle-ci
+3. Cela maintiendrait la cohérence et éviterait la duplication de code
+
+Souhaitez-vous que j'utilise cette fonction existante ou préférez-vous créer une nouvelle implémentation?"
+</example>
+
+<example type="invalid">
+// Implémentation sans évaluation
+"J'ai ajouté la fonction de validation d'email comme demandé."
+function validateEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+// (Sans mentionner qu'une fonction identique existe déjà ailleurs)
+</example> 

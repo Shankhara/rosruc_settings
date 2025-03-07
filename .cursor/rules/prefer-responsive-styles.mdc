@@ -1,0 +1,27 @@
+---
+description: Rends l'app responsive en évitant les tailles fixes en pixels, utilise flex ou pourcentages pour s'adapter à tous les écrans.
+globs: **/*
+alwaysApply: true
+---
+Description : Rends l'app responsive en évitant les tailles fixes en pixels, utilise flex ou pourcentages pour s'adapter à tous les écrans.  
+
+Détails : Par exemple, remplace `width: 300px` par `flex: 1` ou `width: '50%'`. Utilise `theme.spaceSize` pour les espacements relatifs.  
+
+Exemple :
+Avant :
+```tsx
+const Container = styled.View({
+  width: 300,
+  height: 100,
+  padding: 20
+});
+```
+
+Après :
+```tsx
+const Container = styled.View({
+  flex: 1,
+  height: '20%',
+  padding: theme.spaceSize(2)
+});
+``` 

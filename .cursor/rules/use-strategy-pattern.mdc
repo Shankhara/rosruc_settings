@@ -1,0 +1,32 @@
+---
+description: Mets chaque logique conditionnelle dans une fonction séparée et choisis-la dynamiquement, comme des stratégies.
+globs: **/*
+alwaysApply: true
+---
+Description : Mets chaque logique conditionnelle dans une fonction séparée et choisis-la dynamiquement, comme des stratégies.  
+
+Détails : Ça sépare les comportements et facilite les tests. Par exemple, au lieu d'un if/else pour des paiements, crée des stratégies "carte" et "paypal".  
+
+Exemple :
+Avant :
+```tsx
+function pay(method, amount) {
+  if (method === "card") return `Carte: ${amount}€`;
+  if (method === "paypal") return `PayPal: ${amount}€`;
+  return "Non supporté";
+}
+```
+
+Après :
+```tsx
+const strategies = {
+  card: (amount) => `Carte: ${amount}€`,
+  paypal: (amount) => `PayPal: ${amount}€`,
+  default: () => "Non supporté"
+};
+
+function pay(method, amount) {
+  const strategy = strategies[method] || strategies.default;
+  return strategy(amount);
+}
+``` 

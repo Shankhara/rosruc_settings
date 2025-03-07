@@ -1,0 +1,34 @@
+---
+description: Simplifie les petits if/else avec des ternaires ou des opérateurs logiques dans le JSX ou les assignations.
+globs: **/*
+alwaysApply: true
+---
+Description : Simplifie les petits if/else avec des ternaires ou des opérateurs logiques dans le JSX ou les assignations.  
+
+Détails : Ça rend le code plus concis. Par exemple, utilise "actif ? <Icone1 /> : <Icone2 />" ou "isLoading && <Loader />" pour des cas simples.  
+
+Exemple :
+Avant :
+```tsx
+function Icon({ isActive }) {
+  if (isActive) {
+    return <ActiveIcon />;
+  } else {
+    return <InactiveIcon />;
+  }
+}
+```
+
+Après :
+```tsx
+function Icon({ isActive }) {
+  return isActive ? <ActiveIcon /> : <InactiveIcon />;
+}
+```
+
+Ou :
+```tsx
+function Load({ isLoading }) {
+  return <View>{isLoading && <Loader />}</View>;
+}
+``` 

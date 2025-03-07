@@ -1,0 +1,28 @@
+---
+description: Documente les fonctions ou composants complexes avec JSDoc pour expliquer leur intention.
+globs: **/*
+alwaysApply: true
+---
+Description : Documente les fonctions ou composants complexes avec JSDoc pour expliquer leur intention.  
+
+Détails : Si une fonction dépasse 10 lignes ou a plusieurs props, ajoute un `@description` et des `@param`.  
+
+Exemple :
+Avant :
+```tsx
+function handleGoogleLogin() {
+  // ...
+}
+```
+
+Après :
+```tsx
+/**
+ * Gère la connexion via Google SSO.
+ * @param {boolean} redirect - Rediriger après succès ?
+ * @returns {Promise<void>}
+ */
+async function handleGoogleLogin(redirect: boolean) {
+  // ...
+}
+``` 

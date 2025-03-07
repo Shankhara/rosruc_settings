@@ -1,0 +1,35 @@
+---
+description: TOUJOURS proposer les modifications avant de changer le code
+globs: **/*.{js,jsx,ts,tsx}
+---
+
+# Proposer Avant de Modifier
+
+## Context
+- Applicable lors de toute modification de code
+- À utiliser systématiquement avant d'apporter des changements
+
+## Requirements
+- Décrire clairement les modifications prévues en langage naturel avant de les implémenter
+- Expliquer le raisonnement derrière chaque changement proposé
+- Attendre l'approbation ou les ajustements de l'utilisateur avant de procéder
+- Présenter l'approche globale et les impacts attendus
+
+## Examples
+<example>
+// Avant de modifier un composant
+"Je propose de modifier le composant Button pour ajouter un état de chargement. Cela nécessitera:
+1. Ajouter une prop 'isLoading' de type boolean
+2. Afficher un spinner quand isLoading est true
+3. Désactiver le bouton pendant le chargement
+
+Voulez-vous que j'implémente cette modification?"
+</example>
+
+<example type="invalid">
+// Modification directe sans proposition préalable
+function Button(props) {
+  // J'ai ajouté un état de chargement et un spinner
+  return props.isLoading ? <Spinner /> : <button {...props}>{props.children}</button>;
+}
+</example> 
