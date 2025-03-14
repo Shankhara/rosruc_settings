@@ -17,7 +17,7 @@ async function fetchData() {
 
 Après :
 ```tsx
-import { t } from '@lingui/macro';
+import { t } from '@lingui/react/macro';
 
 async function fetchData() {
   try {

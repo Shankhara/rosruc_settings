@@ -17,7 +17,7 @@ function Welcome() {
 
 Après :
 ```tsx
-import { Trans } from '@lingui/macro';
+import { Trans } from '@lingui/react/macro';
 
 function Welcome() {
   return <Text><Trans>Bienvenue</Trans></Text>;
