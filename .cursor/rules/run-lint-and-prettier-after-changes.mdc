@@ -1,0 +1,21 @@
+---
+description: À la fin de chaque modification de code, lancer automatiquement le linter et prettier pour identifier et corriger les erreurs de formatage et de style.
+globs: 
+alwaysApply: true
+---
+Détails : Après avoir effectué des changements dans le code, vérifier que les modifications respectent les standards du projet en lançant les outils de vérification (ESLint, TypeScript) et de formatage (Prettier), puis corriger toutes les erreurs avant de finaliser.  
+
+Exemple :
+Processus typique :
+```bash
+# Après avoir modifié le code
+yarn lint
+# Corriger les erreurs de lint si nécessaire
+
+yarn format
+# Vérifier que le formatage est correct
+
+# Confirmer que le code est propre avant de terminer
+```
+
+Le but est d'assurer que chaque contribution respecte automatiquement les conventions du projet et maintient une qualité de code constante.

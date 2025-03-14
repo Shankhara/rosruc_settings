@@ -1,0 +1,27 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+Détails : Ne jamais utiliser npm, pnpm ou autre gestionnaire de paquets. Toutes les commandes de gestion de dépendances, d'exécution de scripts ou d'installation doivent utiliser la syntaxe Yarn.  
+
+Exemple :
+À faire :
+```bash
+yarn add package-name
+yarn remove package-name
+yarn install
+yarn start
+yarn build
+yarn lint
+```
+
+À éviter :
+```bash
+npm install package-name
+npm uninstall package-name
+npm i
+npm run start
+```
+
+Yarn doit être utilisé pour maintenir la cohérence dans le projet et éviter les conflits de verrouillage de dépendances.
