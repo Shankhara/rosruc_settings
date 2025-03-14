@@ -1,0 +1,79 @@
+---
+description: Ne jamais désactiver les règles ESLint ou d'autres linters pour contourner des erreurs ou des avertissements. Respecter et corriger les problèmes identifiés par les outils d'analyse statique du code.
+globs: 
+alwaysApply: false
+---
+## Contexte
+- Pour tous les projets utilisant des outils d'analyse statique (ESLint, TSLint, etc.)
+- Pour maintenir une haute qualité de code et une cohérence dans la base de code
+- Pour s'assurer que les bonnes pratiques sont suivies systématiquement
+
+## Requirements
+- Toujours comprendre la raison derrière chaque règle avant d'envisager une solution
+- Résoudre les problèmes identifiés par le linter en modifiant le code, pas les règles
+- N'utiliser les commentaires d'exception (`// eslint-disable-next-line`) que dans des cas exceptionnels et documentés
+- Ne jamais désactiver globalement une règle dans la configuration du linter pour résoudre un problème spécifique
+- Pour chaque exception nécessaire, ajouter un commentaire expliquant pourquoi elle est justifiée
+- Pour les faux positifs récurrents, envisager d'améliorer la configuration du linter ou le code plutôt que de désactiver les règles
+
+## Examples
+
+<example>
+// ✅ Corriger le problème identifié par le linter
+// Erreur: "@typescript-eslint/no-use-before-define"
+// Solution: Déplacer la définition avant l'utilisation
+
+// Avant: Erreur car StyledComponent est utilisé avant d'être défini
+function MyComponent() {
+  return <StyledComponent />;
+}
+
+const StyledComponent = styled(View)({
+  padding: 10,
+});
+
+// Après: Correction en déplaçant la définition avant l'utilisation
+const StyledComponent = styled(View)({
+  padding: 10,
+});
+
+function MyComponent() {
+  return <StyledComponent />;
+}
+</example>
+
+<example>
+// ✅ Pour des cas exceptionnels, utiliser des exceptions ciblées avec justification
+// Erreur: "@typescript-eslint/no-explicit-any"
+// Solution: Exception locale documentée quand nécessaire
+
+// Exception ciblée avec justification
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// Justification: La bibliothèque externe ne fournit pas de types précis pour cette API
+const response = await externalAPI.getData() as any;
+
+// Meilleure solution: Définir un type approprié
+interface APIResponse {
+  data: string[];
+  status: number;
+}
+const response = await externalAPI.getData() as APIResponse;
+</example>
+
+<example type="invalid">
+// ❌ Ne JAMAIS désactiver des règles dans la configuration globale pour résoudre des erreurs spécifiques
+// .eslintrc.js
+module.exports = {
+  // ...
+  rules: {
+    // Mauvaise pratique: Désactiver des règles pour éviter de corriger le code
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-use-before-define': 'off',
+    'no-console': 'off'
+  }
+};
+
+// ❌ Ne pas utiliser d'exceptions sans justification
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const data: any = fetchData();
+</example>
