@@ -3,7 +3,7 @@ description: Organise le code selon les principes du Domain Driven Design (DDD) 
 globs: 
 alwaysApply: true
 ---
-# Domain Driven Design
+# domain Driven Design
 
 ## Context
 - Pour toute application de complexité moyenne à élevée
@@ -12,26 +12,26 @@ alwaysApply: true
 
 ## Requirements
 - Structurer chaque fonctionnalité/module avec trois dossiers principaux:
-  - Domain: Contient le cœur métier et la logique business (entités, objets valeur, agrégats, services de domaine)
-  - Infra: Gère les communications externes et l'infrastructure (API, base de données, device)
-  - View: Responsable de l'interface utilisateur et de l'affichage
+  - domain: Contient le cœur métier et la logique business (entités, objets valeur, agrégats, services de domaine)
+  - infra: Gère les communications externes et l'infrastructure (API, base de données, device)
+  - view: Responsable de l'interface utilisateur et de l'affichage
 - Utiliser un langage omniprésent (Ubiquitous Language) reflétant le modèle métier
-- Isoler la logique métier dans le Domain
-- Gérer les accès aux données externes via l'Infrastructure
-- Séparer la présentation dans la View
+- Isoler la logique métier dans le domain
+- Gérer les accès aux données externes via l'infrastructure
+- Séparer la présentation dans la view
 - Respecter la responsabilité unique pour chaque couche
 
 ## Examples
 <example>
-// Dans features/user/Domain/UserEntity.ts
+// Dans features/user/domain/UserEntity.ts
 export interface UserEntity {
   id: string;
   name: string;
   email: string;
 }
 
-// Dans features/user/Infra/userRepository.ts
-import { UserEntity } from '../Domain/UserEntity';
+// Dans features/user/infra/userRepository.ts
+import { UserEntity } from '../domain/UserEntity';
 
 export const fetchUser = async (id: string): Promise<UserEntity> => {
   try {
@@ -42,11 +42,11 @@ export const fetchUser = async (id: string): Promise<UserEntity> => {
   }
 };
 
-// Dans features/user/View/UserProfile.tsx
+// Dans features/user/view/UserProfile.tsx
 import { useState, useEffect } from 'react';
-import { UserEntity } from '../Domain/UserEntity';
-import { fetchUser } from '../Infra/userRepository';
-import { Trans } from '@lingui/macro';
+import { UserEntity } from '../domain/UserEntity';
+import { fetchUser } from '../infra/userRepository';
+import { Trans } from '@lingui/react/macro';
 
 export function UserProfile({ userId }: { userId: string }) {
   const [user, setUser] = useState<UserEntity | null>(null);
