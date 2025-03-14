@@ -1,0 +1,79 @@
+---
+description: Utiliser Emotion avec ThemeProvider pour le styling des composants React Native.
+globs: 
+alwaysApply: true
+---
+# Utilisation d'Emotion avec ThemeProvider
+
+## Context
+- Pour tous les composants React Native nécessitant du styling
+- Pour l'application d'un design system cohérent
+- Pour l'accès au thème global de l'application
+
+## Requirements
+- Importer styled uniquement depuis '@emotion/native'
+- Utiliser la syntaxe de fonction avec des objets pour les styles: styled(Component)({})
+- Accéder au thème via la déstructuration: ({ theme }) => ({})
+- Typer les props des composants styled avec TypeScript
+- Appliquer des styles conditionnels via des props typées
+- Ne jamais utiliser StyleSheet de React Native
+
+## Examples
+<example>
+// Import correct
+import styled from '@emotion/native';
+import { TextInput, TouchableOpacity } from 'react-native';
+
+// Composant simple sans accès au thème
+const Container = styled(View)({
+  width: '100%',
+  padding: 20,
+  flexDirection: 'row',
+  justifyContent: 'center',
+});
+
+// Composant avec accès au thème
+const StyledInput = styled(TextInput)(({ theme }) => ({
+  width: '100%',
+  paddingVertical: 10,
+  paddingHorizontal: 15,
+  borderRadius: 5,
+  backgroundColor: theme.colors.palette.white,
+  color: theme.colors.palette.neutral900,
+}));
+
+// Composant avec props typées et styles conditionnels
+const Button = styled(TouchableOpacity)<{
+  disabled?: boolean;
+  isLoading?: boolean;
+}>(({ isLoading, disabled, theme }) => ({
+  paddingVertical: 12,
+  borderRadius: 5,
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: theme.colors.palette.primary500,
+  opacity: (isLoading || disabled) ? 0.7 : 1,
+}));
+</example>
+
+<example type="invalid">
+// ❌ Ne pas utiliser les template literals
+const Container = styled.View`
+  width: 100%;
+  padding: 20px;
+`;
+
+// ❌ Ne pas utiliser StyleSheet de React Native
+import { StyleSheet } from 'react-native';
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    padding: 20,
+  },
+});
+
+// ❌ Ne pas accéder au thème comme ceci
+const Button = styled(TouchableOpacity)`
+  background-color: ${props => props.theme.colors.primary};
+`;
+</example>
