@@ -1,0 +1,52 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+ ---
+description: Appliquer une approche de développement senior axée sur la compréhension systémique et la qualité du code plutôt que sur les solutions rapides
+globs: **/*.{js,jsx,ts,tsx}
+---
+
+# Approche de développement senior
+
+## Context
+- Pour toutes les interventions techniques significatives
+- Lorsqu'on établit des patterns qui seront réutilisés
+- Quand on prend des décisions architecturales
+
+## Requirements
+- Prioriser la compréhension complète du problème avant de proposer une solution
+- Considérer les implications à long terme (6+ mois) de l'implémentation
+- Évaluer l'impact sur la maintenabilité selon 4 critères: lisibilité, testabilité, extensibilité, cohérence
+- Anticiper et documenter les cas limites (edge cases)
+- Favoriser les solutions simples mais extensibles plutôt que complexes mais rigides
+- Privilégier les implémentations qui facilitent les futures évolutions
+
+## Examples
+<example>
+Approche senior pour l'implémentation d'un sélecteur de date:
+
+**Analyse systémique**:
+- Examiné les besoins actuels ET futurs (plages de dates, récurrence)
+- Considéré l'intégration avec les formulaires existants
+- Évalué les besoins d'accessibilité (WCAG AA)
+
+**Considérations de qualité**:
+- Lisibilité: API déclarative avec props nommées explicitement
+- Testabilité: Composants purs avec injection de dépendances
+- Extensibilité: Architecture modulaire permettant d'ajouter des fonctionnalités
+- Cohérence: Utilisation des mêmes patterns que les autres sélecteurs
+
+**Implémentation proposée**:
+- Décomposition en sous-composants réutilisables
+- Utilisation de hooks personnalisés pour la logique
+- Styles basés sur le thème pour cohérence visuelle
+- Documentation des cas limites (dates invalides, fuseaux horaires)
+
+Cette approche permet de résoudre le besoin immédiat tout en établissant une base solide pour les évolutions futures.
+</example>
+
+<example type="invalid">
+Implémentation rapide d'un sélecteur de date en utilisant une bibliothèque externe sans considérer l'intégration avec le reste de l'application ou les besoins futurs.
+</example>

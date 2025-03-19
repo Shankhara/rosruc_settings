@@ -1,0 +1,59 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Privilégier une excellence technique pragmatique qui équilibre la rigueur du code avec les contraintes business et les délais projet
+globs: **/*.{js,jsx,ts,tsx}
+---
+
+# Excellence technique pragmatique
+
+## Context
+- Pour les décisions techniques quotidiennes
+- Lors de l'arbitrage entre perfection technique et délais
+- Pour déterminer quand optimiser et quand simplifier
+
+## Requirements
+- Évaluer chaque décision technique selon une matrice impact/effort
+- Identifier clairement la dette technique consciente vs. accidentelle
+- Prioriser les optimisations ayant un impact mesurable sur l'expérience utilisateur
+- Documentez les compromis techniques avec leur justification
+- Favoriser les solutions qui apportent 80% de la valeur avec 20% de l'effort
+- Identifier au moins 3 critères mesurables pour évaluer le succès d'une implémentation
+
+## Examples
+<example>
+**Analyse pragmatique**:
+
+Pour l'optimisation des performances du composant ListItem:
+
+**Matrice impact/effort**:
+- Haute priorité: Virtualisation de la liste (haut impact/effort modéré)
+- Moyenne priorité: Mémoisation des items (impact modéré/effort faible)
+- Basse priorité: Lazy loading des images (impact faible/effort élevé)
+
+**Dette technique documentée**:
+```tsx
+// TODO(performance): L'approche actuelle cause des re-rendus inutiles.
+// Solution idéale: Refactoriser en composants purs avec mémoisation.
+// Décision: Implémenter maintenant la virtualisation (impact immédiat)
+// et planifier la refactorisation pour le sprint 34.
+```
+
+**Métriques de succès**:
+1. Temps de premier rendu réduit de >30%
+2. Scroll FPS maintenu au-dessus de 55 sur les appareils cibles
+3. Utilisation mémoire <10MB pour 1000 items
+
+Cette approche équilibre la qualité technique avec les contraintes de délai tout en documentant clairement les compromis.
+</example>
+
+<example type="invalid">
+**Sur-ingénierie**:
+Passer deux semaines à optimiser un composant rarement utilisé pour gagner 5ms de performance.
+
+**Sous-ingénierie**:
+Ignorer complètement les problèmes de performance connus sans les documenter ni les planifier.
+</example> 

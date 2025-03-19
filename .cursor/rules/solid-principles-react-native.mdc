@@ -1,0 +1,147 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Appliquer les principes SOLID adaptés à React Native pour créer du code modulaire, évolutif et maintenable
+globs: **/*.{js,jsx,ts,tsx}
+---
+
+# Principes SOLID en React Native
+
+## Context
+- Pour la conception de nouveaux composants et modules
+- Lors de la refactorisation de code existant
+- Pour évaluer la qualité architecturale du code
+
+## Requirements
+- **Single Responsibility**: Chaque composant ou hook doit avoir une seule raison de changer
+- **Open/Closed**: Les composants doivent être ouverts à l'extension mais fermés à la modification
+- **Liskov Substitution**: Les composants dérivés doivent pouvoir remplacer leurs composants de base
+- **Interface Segregation**: Préférer plusieurs props spécifiques à une grosse prop générique
+- **Dependency Inversion**: Dépendre des abstractions plutôt que des implémentations concrètes
+
+## Examples
+<example>
+**Single Responsibility**:
+```tsx
+// ✅ Bon exemple - Chaque composant a une responsabilité unique
+const ProductPrice = ({ price, discount }) => {
+  // Logique de rendu du prix uniquement
+};
+
+const ProductImage = ({ src, alt }) => {
+  // Logique de chargement et rendu d'image uniquement
+};
+
+const ProductCard = ({ product }) => (
+  <View>
+    <ProductImage src={product.image} alt={product.name} />
+    <ProductPrice price={product.price} discount={product.discount} />
+  </View>
+);
+```
+
+**Open/Closed**:
+```tsx
+// ✅ Bon exemple - Extensible sans modification
+const Button = ({ variant = 'primary', children, ...props }) => {
+  const variantStyles = {
+    primary: { backgroundColor: 'blue' },
+    secondary: { backgroundColor: 'gray' },
+    // Extensible - nouveaux variants peuvent être ajoutés sans modifier Button
+  };
+  
+  return (
+    <TouchableOpacity 
+      style={[baseStyles, variantStyles[variant]]} 
+      {...props}
+    >
+      {children}
+    </TouchableOpacity>
+  );
+};
+```
+
+**Liskov Substitution**:
+```tsx
+// ✅ Bon exemple - BaseInput peut être remplacé par ses dérivés
+const BaseInput = ({ value, onChange, ...props }) => (
+  <TextInput value={value} onChangeText={onChange} {...props} />
+);
+
+// NumberInput respecte le contrat de BaseInput
+const NumberInput = (props) => (
+  <BaseInput 
+    {...props}
+    keyboardType="numeric"
+    onChange={(text) => props.onChange(text.replace(/[^0-9]/g, ''))}
+  />
+);
+```
+
+**Interface Segregation**:
+```tsx
+// ✅ Bon exemple - Props spécifiques au lieu d'objets géants
+// Au lieu de type FormFieldProps = { input: InputProps, layout: LayoutProps, validation: ValidationProps }
+
+// Approche avec props séparées
+type FormFieldProps = {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  error?: string;
+  required?: boolean;
+};
+```
+
+**Dependency Inversion**:
+```tsx
+// ✅ Bon exemple - Dépend d'une abstraction (API) plutôt que d'une implémentation
+const ProductList = ({ fetchProducts }) => {
+  const [products, setProducts] = useState([]);
+  
+  useEffect(() => {
+    fetchProducts().then(setProducts);
+  }, [fetchProducts]);
+  
+  return <FlatList data={products} />;
+};
+
+// Utilisation - Injection de l'implémentation concrète
+<ProductList fetchProducts={api.getProducts} />
+```
+</example>
+
+<example type="invalid">
+**Violation Single Responsibility**:
+```tsx
+// ❌ Mauvais exemple - Fait trop de choses
+const ProductCard = ({ product }) => {
+  const [isInCart, setIsInCart] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  // Gère le chargement d'image
+  // Gère l'état du panier
+  // Calcule les prix avec réduction
+  // Formate les dates
+  // Gère les interactions utilisateur
+  
+  return (/* JSX complexe avec logique mélangée */);
+};
+```
+
+**Violation Open/Closed**:
+```tsx
+// ❌ Mauvais exemple - Nécessite modification pour extension
+const Button = ({ type, ...props }) => {
+  if (type === 'primary') {
+    return <PrimaryButton {...props} />;
+  } else if (type === 'secondary') {
+    return <SecondaryButton {...props} />;
+  }
+  // Pour ajouter un nouveau type, il faut modifier ce composant
+};
+```
+</example> 

@@ -1,0 +1,55 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+ ---
+description: Analyser exhaustivement le code pertinent avant modification pour comprendre les dépendances et garantir la cohérence de l'implémentation
+globs: **/*.{js,jsx,ts,tsx}
+---
+
+# Analyse contextuelle avant modification
+
+## Context
+- Avant toute intervention sur un composant existant
+- Lors de l'intégration de nouvelles fonctionnalités dans des modules existants
+- Pour comprendre les conventions et patterns en place
+
+## Requirements
+- Analyser au minimum 3 composants ou modules connexes
+- Identifier les patterns de conception utilisés dans les fichiers concernés
+- Lister les dépendances directes et indirectes impactées
+- Examiner les tests existants pour comprendre les cas d'utilisation prévus
+- Documenter les hooks et les contexts utilisés dans le composant
+- Vérifier les performances actuelles avant modification (ex: nombre de re-rendus)
+
+## Examples
+<example>
+Analyse contextuelle du composant ProductCard:
+
+**Composants connexes explorés**:
+- ProductList: Utilise ProductCard avec virtualization
+- ProductDetail: Partage des styles et des types avec ProductCard
+- CartItem: Réutilise des sous-composants de ProductCard
+
+**Patterns identifiés**:
+- Composition: Le composant utilise des sous-composants pour la flexibilité
+- Compound Component: API avec ProductCard.Image, ProductCard.Title, etc.
+- Mémoisation: Utilisation de React.memo pour les éléments de liste
+
+**Dépendances critiques**:
+- useProductContext pour l'état global des produits
+- useCartMutation pour les actions d'ajout au panier
+- useTheme pour les styles contextuels
+
+**Cas de test clés**:
+- Rendu avec différentes variantes de prix (normal, promotion, rupture)
+- Comportement au clic sur le bouton d'ajout au panier
+- Affichage adaptatif sur différentes tailles d'écran
+
+Cette analyse révèle que toute modification devra respecter le pattern de composition et maintenir la compatibilité avec la virtualisation.
+</example>
+
+<example type="invalid">
+Je vais directement modifier le composant sans regarder comment il est utilisé ailleurs.
+</example>
