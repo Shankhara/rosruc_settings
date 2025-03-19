@@ -1,7 +1,7 @@
 ---
-description: Ne jamais désactiver les règles ESLint ou d'autres linters pour contourner des erreurs ou des avertissements. Respecter et corriger les problèmes identifiés par les outils d'analyse statique du code.
+description: 
 globs: 
-alwaysApply: false
+alwaysApply: true
 ---
 ## Contexte
 - Pour tous les projets utilisant des outils d'analyse statique (ESLint, TSLint, etc.)
