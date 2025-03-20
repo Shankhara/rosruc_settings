@@ -1,0 +1,57 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Privilégier des interfaces simples et précises plutôt que des types complexes existants pour une meilleure maintenabilité
+globs: **/*.{ts,tsx}
+---
+
+# Types simples et précis avant adaptation complexe
+
+## Context
+- Lors de l'intégration avec des bibliothèques externes
+- Pour le typage des interfaces de composants ou hooks
+- Quand on doit modéliser des structures de données
+
+## Requirements
+- Comprendre le flow technique exact avant de commencer le typage
+- Créer des interfaces qui correspondent exactement à l'usage réel
+- Éviter d'adapter des types complexes existants quand une interface simple suffit
+- Documenter le choix de l'approche de typage si elle s'écarte des types de la lib
+- Garder les types aussi simples que possible tout en restant type-safe
+
+## Examples
+<example>
+// ✅ Bon exemple - Interface simple et précise
+interface SendUserOperationParams {
+  uo: { 
+    target: `0x${string}`; 
+    data: `0x${string}`; 
+    value?: bigint | undefined 
+  };
+}
+
+function useSmartAccount() {
+  const writeContract = async (params: SendUserOperationParams): Promise<`0x${string}`> => {
+    const hash = await client.sendUserOperation(params);
+    return hash.hash;
+  };
+}
+</example>
+
+<example type="invalid">
+// ❌ Mauvais exemple - Adaptation forcée de types complexes
+import { type WriteContractParameters } from 'some-lib';
+
+type ComplexParams = Omit<WriteContractParameters, 'something'> & {
+  something: Partial<Pick<WriteContractParameters['something'], 'specific'>>
+};
+
+function useSmartAccount() {
+  const writeContract = async (params: ComplexParams) => {
+    // Conversion complexe des types...
+  };
+}
+</example> 
