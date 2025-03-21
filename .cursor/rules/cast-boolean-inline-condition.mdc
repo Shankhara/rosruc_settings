@@ -1,0 +1,45 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Règle : Double négation (!!) pour le rendu conditionnel
+
+## Contexte
+- Dans les rendus conditionnels de React Native
+- Pour les valeurs qui peuvent être undefined, null, ou non-booléennes
+- Particulièrement important dans les composants JSX
+
+## Requirements
+1. TOUJOURS utiliser `!!` pour :
+   - Les conditions de rendu d'éléments optionnels
+   - Les propriétés d'objets qui peuvent être undefined
+   - Les longueurs de tableaux dans les conditions
+   - Les valeurs qui ne sont pas strictement booléennes
+
+2. Exceptions (ne pas utiliser `!!`) :
+   - Les booléens explicites (true/false)
+   - Les conditions dans les fonctions JavaScript pures
+   - Les opérateurs ternaires pour des valeurs textuelles
+
+## Exemples
+✅ Bons usages :
+```tsx
+{!!image && <Image source={image} />}
+{!!user?.name && <Text>{user.name}</Text>}
+{!!items.length && <List items={items} />}
+{!!optionalValue?.nested?.property && <Component />}
+```
+
+❌ Mauvais usages :
+```tsx
+{image && <Image source={image} />} // Risque de rendu de '0' ou ''
+{user.name && <Text>{user.name}</Text>} // Peut crasher si user undefined
+{items.length && <List items={items} />} // Peut rendre le nombre au lieu d'un booléen
+```
+
+## Justification
+1. Sécurité : Évite les erreurs de rendu de valeurs non-JSX
+2. Prévention : Empêche les crashes dus aux valeurs undefined
+3. Clarté : Indique explicitement l'intention de conversion en booléen
+4. Cohérence : Maintient un pattern uniforme dans toute l'application
