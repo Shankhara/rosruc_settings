@@ -5,29 +5,40 @@ alwaysApply: true
 ---
 Description : Interdis les margins, le parent doit gérer l'espace avec du padding pour une mise en page prévisible.  
 
+## Requirements
+- Ne jamais utiliser les propriétés CSS suivantes :
+  - margin
+  - marginTop
+  - marginBottom
+  - marginLeft
+  - marginRight
+  - marginHorizontal
+  - marginVertical
+- Toujours utiliser le padding sur le composant parent pour gérer l'espacement
+- Si un espacement est nécessaire entre des éléments :
+  - Utiliser gap/rowGap/columnGap pour les conteneurs flex
+  - Utiliser paddingTop/paddingBottom sur le parent pour les autres cas
+
 Détails : Remplace `marginTop: 10` sur un enfant par `paddingTop` sur le parent, en utilisant le thème.  
 
-Exemple :
-Avant :
-```tsx
-const Button = styled.TouchableOpacity({
-  marginTop: 20,
-  padding: 10
-});
 
-const Container = styled.View({
-  flex: 1
+```tsx
+// ❌ À éviter
+const Child = styled.View({
+  marginBottom: theme.spaceSize(4)
 });
 ```
 
-Après :
 ```tsx
-const Container = styled.View({
-  flex: 1,
-  paddingTop: theme.spaceSize(3)
+// ✅ À privilégier
+const Parent = styled.View({
+  gap: theme.spaceSize(4)
 });
+```
 
-const Button = styled.TouchableOpacity({
-  padding: 10
-});
-``` 
+```tsx
+// ✅ Ou pour des cas plus spécifiques
+const Parent = styled.View({
+  paddingBottom: theme.spaceSize(4)
+}); 
+```
