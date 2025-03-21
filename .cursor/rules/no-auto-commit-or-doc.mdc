@@ -1,0 +1,56 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+---
+description: Ne jamais committer ou créer de documentation sans une demande explicite de l'utilisateur
+globs: **/*
+---
+
+# Ne jamais committer ou créer de documentation sans autorisation
+
+## Context
+- Avant toute opération Git modifiant le dépôt (commit, push)
+- Lors de la création de tout fichier de documentation (.md, PR templates, etc.)
+- Quand l'IA propose des changements au code
+
+## Requirements
+- JAMAIS exécuter de commande `git commit` sans une demande explicite de l'utilisateur
+- JAMAIS créer de fichiers de documentation (.md, README, templates) sans instruction spécifique
+- Présenter les modifications proposées pour revue avant toute action permanente
+- Attendre une validation explicite avant d'appliquer des changements définitifs
+- Demander systématiquement l'approbation avant d'exécuter des commandes Git qui modifient l'historique
+
+## Examples
+<example>
+**Approche correcte**:
+
+Utilisateur: "Implémente cette fonctionnalité et fais un commit avec le message 'feat: add user authentication'"
+
+IA: *Implémente la fonctionnalité*
+"J'ai implémenté la fonctionnalité. Voici les modifications:
+[description des changements]
+
+Souhaitez-vous que j'exécute le commit avec le message 'feat: add user authentication'?"
+
+Utilisateur: "Oui, vas-y"
+
+IA: *Exécute le commit uniquement après approbation*
+</example>
+
+<example type="invalid">
+**Approche incorrecte**:
+
+Utilisateur: "Implémente cette fonctionnalité"
+
+IA: *Implémente la fonctionnalité et exécute automatiquement:*
+```
+git add .
+git commit -m "feat: add user authentication"
+git push origin feature/auth
+```
+
+*Ou crée un PR template sans qu'on le lui demande*
+</example>
