@@ -1,0 +1,62 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Fournir un modèle structuré pour diagnostiquer et corriger efficacement les bugs dans l'application
+globs: **/*.{js,jsx,ts,tsx}
+---
+
+# Template de prompt pour correction de bugs
+
+## Context
+- Lors du signalement d'un bug dans l'application
+- Pour résoudre des comportements inattendus ou erreurs
+- Avant toute intervention dans le code existant
+
+## Requirements
+- Structurer le prompt avec les sections suivantes:
+  1. **SYMPTÔMES**: Description précise du comportement incorrect
+  2. **REPRODUCTION**: Étapes détaillées pour reproduire le bug
+  3. **COMPORTEMENT ATTENDU**: Description du fonctionnement souhaité
+  4. **CONTEXTE TECHNIQUE**: Fichiers/modules concernés et informations pertinentes
+  5. **CONTRAINTES**: Limites ou exigences particulières pour la solution
+- Fournir des captures d'écran ou logs d'erreur quand disponibles
+- Préciser la priorité et l'impact du bug
+- Indiquer les tentatives de résolution déjà effectuées
+
+## Examples
+<example>
+**Prompt efficace pour correction de bug**:
+
+@PaymentScreen.tsx @module/payment/infra/paymentService.ts
+
+**SYMPTÔMES**: 
+Le bouton de paiement reste actif même après un clic, permettant à l'utilisateur de soumettre plusieurs paiements identiques.
+
+**REPRODUCTION**:
+1. Naviguer vers la page d'achat de billets
+2. Sélectionner un billet et procéder au paiement
+3. Cliquer rapidement plusieurs fois sur "Payer maintenant"
+4. Observer que plusieurs transactions sont initiées
+
+**COMPORTEMENT ATTENDU**:
+Le bouton devrait être désactivé immédiatement après le premier clic jusqu'à ce que la transaction soit terminée (succès ou échec).
+
+**CONTEXTE TECHNIQUE**:
+- Le processus de paiement utilise Stripe via le hook usePayment
+- Le composant PaymentScreen gère l'état de chargement mais ne semble pas désactiver le bouton à temps
+- Le problème n'apparaît que sur les appareils à faible performance
+
+**CONTRAINTES**:
+- La solution doit respecter le principe DDD (logique dans domain/infra)
+- La correction ne doit pas affecter le flux utilisateur normal
+- Maintenir la compatibilité avec les tests existants
+</example>
+
+<example type="invalid">
+**Prompt inefficace**:
+
+Il y a un bug dans le paiement, parfois ça paie deux fois. Peux-tu corriger ça?
+</example>
