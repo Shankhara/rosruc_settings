@@ -1,0 +1,73 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Guider la formulation des demandes d'optimisation de performance pour cibler efficacement les problèmes et mesurer les améliorations
+globs: **/*.{js,jsx,ts,tsx}
+---
+
+# Template de prompt pour optimisation de performances
+
+## Context
+- Lors de l'identification de lenteurs ou problèmes de réactivité dans l'application
+- Pour améliorer l'expérience utilisateur sur des écrans ou fonctionnalités critiques
+- Avant de déployer en production des fonctionnalités gourmandes en ressources
+- Pour répondre à des métriques d'application sous-optimales
+
+## Requirements
+- Structurer le prompt avec les sections suivantes:
+  1. **PROBLÈME DE PERFORMANCE**: Description précise du problème observé (lenteur, saccades, délais)
+  2. **CONTEXTE DE REPRODUCTION**: Conditions et étapes pour reproduire le problème
+  3. **MESURES ACTUELLES**: Métriques ou observations quantifiables de la performance actuelle
+  4. **COMPOSANTS SUSPECTS**: Fichiers ou fonctions potentiellement responsables du problème
+  5. **OBJECTIFS D'OPTIMISATION**: Cibles de performance souhaitées (temps, fluidité, utilisation mémoire)
+  6. **CONTRAINTES**: Limites à respecter pendant l'optimisation (compatibilité, maintenabilité)
+- Inclure des données de profilage si disponibles (captures d'écran, logs)
+- Spécifier les environnements où le problème est observé (device, OS, configuration)
+- Préciser le niveau de priorité de l'optimisation
+
+## Examples
+<example>
+**Prompt efficace pour optimisation de performance**:
+
+@module/event/view/EventList.tsx @module/event/hooks/useEvents.ts
+
+**PROBLÈME DE PERFORMANCE**: 
+La liste d'événements présente des saccades importantes lors du défilement, particulièrement lorsqu'elle contient plus de 20 items. Le temps de rendu initial est également lent (>2s).
+
+**CONTEXTE DE REPRODUCTION**:
+1. Naviguer vers l'écran principal qui affiche la liste des événements
+2. Faire défiler rapidement la liste vers le bas puis vers le haut
+3. Observer les saccades et le délai de réponse aux interactions
+
+**MESURES ACTUELLES**:
+- Temps de rendu initial: 2.3s en moyenne sur iPhone 11
+- FPS pendant le défilement: chute à 12-15 FPS (contre 60 FPS attendu)
+- Utilisation mémoire: croissance continue jusqu'à +30MB après 1 minute d'utilisation
+
+**COMPOSANTS SUSPECTS**:
+- `EventCard` crée possiblement trop de re-rendus inutiles
+- `useEvents` récupère toutes les données sans pagination
+- Images des événements potentiellement non optimisées
+- Absence de virtualisation dans la liste
+
+**OBJECTIFS D'OPTIMISATION**:
+- Temps de rendu initial < 1s
+- Maintien d'un FPS > 45 pendant le défilement
+- Utilisation mémoire stable sans croissance continue
+- Réactivité immédiate aux interactions utilisateur
+
+**CONTRAINTES**:
+- Conserver l'apparence visuelle actuelle des cartes
+- Maintenir la compatibilité avec les devices plus anciens (iPhone 8+)
+- Respecter l'architecture DDD existante
+- Garder la compatibilité avec les tests actuels
+</example>
+
+<example type="invalid">
+**Prompt inefficace**:
+
+L'app rame quand il y a beaucoup d'éléments dans la liste d'événements. Peux-tu l'optimiser pour que ça soit plus rapide?
+</example>
