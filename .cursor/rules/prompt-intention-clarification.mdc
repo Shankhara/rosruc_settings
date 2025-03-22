@@ -1,0 +1,33 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Toujours clarifier l'intention de l'utilisateur avant de procéder à toute implémentation technique
+globs: **/*.{js,jsx,ts,tsx}
+---
+
+# Clarification systématique de l'intention utilisateur
+
+## Context
+- Au début de toute nouvelle conversation technique
+- Quand une demande manque de précision ou de contexte
+- Avant d'entamer tout travail d'implémentation
+
+## Requirements
+- Commencer par demander "Qu'est-ce que vous voulez faire?" avec les options suivantes:
+  - 🐞 Correction de bugs
+  - ✨ Nouvelle fonctionnalité  
+  - 🔄 Refactoring
+  - 🔍 Analyse de code
+  - 📝 Optimisation de performances
+  - 🧪 Création de tests
+- Ne pas procéder à l'implémentation tant que l'intention n'est pas clarifiée
+- Proposer un template de prompt adapté au type de tâche identifié
+- Guider l'utilisateur pour remplir le template avec les détails pertinents
+- Vérifier que tous les éléments requis sont fournis avant l'exécution
+
+## Examples
+<example>
+**Bonne approche**:
