@@ -1,0 +1,69 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Structurer les demandes d'analyse de code pour identifier efficacement les problèmes ou comprendre les implémentations existantes
+globs: **/*.{js,jsx,ts,tsx}
+---
+
+# Template de prompt pour analyse de code
+
+## Context
+- Lorsqu'une revue de code est nécessaire pour comprendre une implémentation
+- Pour évaluer la qualité technique d'une section de code
+- Avant de modifier du code complexe ou peu documenté
+- Pour identifier des sources potentielles de bugs ou d'inefficacités
+
+## Requirements
+- Structurer le prompt avec les sections suivantes:
+  1. **OBJECTIF D'ANALYSE**: But précis de l'analyse (compréhension, détection de problèmes, etc.)
+  2. **PÉRIMÈTRE**: Fichiers ou fonctions spécifiques à analyser (avec @)
+  3. **POINTS D'ATTENTION**: Aspects particuliers à examiner en détail
+  4. **CONTEXTE TECHNIQUE**: Informations sur l'environnement ou l'architecture pertinente
+  5. **FORMAT DE RÉSULTAT**: Type de retour attendu (rapport, diagramme, suggestions)
+- Préciser le niveau de détail souhaité pour l'analyse
+- Indiquer si des améliorations doivent être proposées
+- Mentionner le niveau de connaissance préalable sur le code analysé
+
+## Examples
+<example>
+**Prompt efficace pour analyse de code**:
+
+@module/authentication/infra/authenticationService.ts @module/authentication/view/LoginForm.tsx
+
+**OBJECTIF D'ANALYSE**: 
+Comprendre le flux complet d'authentification de l'application, de l'UI jusqu'à l'API, pour identifier d'éventuels problèmes de sécurité.
+
+**PÉRIMÈTRE**:
+- Composant LoginForm et sa gestion d'état
+- Service d'authentification et ses appels API
+- Gestion des tokens et mécanismes de refresh
+- Stockage des informations d'authentification
+
+**POINTS D'ATTENTION**:
+- Validation des entrées utilisateur
+- Sécurisation des appels API
+- Gestion des erreurs et feedback utilisateur
+- Mécanismes de persistance des sessions
+- Protection contre les attaques courantes (injection, CSRF)
+
+**CONTEXTE TECHNIQUE**:
+- Application React Native avec architecture DDD
+- Authentification via Supabase avec JWT
+- Stockage local avec SecureStore sur mobile
+- Contexte React pour l'état global d'authentification
+
+**FORMAT DE RÉSULTAT**:
+- Diagramme de séquence du flux d'authentification
+- Liste des vulnérabilités potentielles identifiées
+- Évaluation des bonnes pratiques suivies/manquantes
+- Recommandations d'amélioration prioritaires
+</example>
+
+<example type="invalid">
+**Prompt inefficace**:
+
+Peux-tu analyser le code d'authentification pour voir s'il est bien fait?
+</example>
