@@ -1,0 +1,85 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Structurer les demandes de création de tests pour assurer une couverture adéquate et une validation fiable du code
+globs: **/*.{js,jsx,ts,tsx,test.js,test.tsx,spec.js,spec.tsx}
+---
+
+# Template de prompt pour création de tests
+
+## Context
+- Lors du développement de nouvelles fonctionnalités nécessitant des tests
+- Pour améliorer la couverture de tests de composants ou fonctions existants
+- Pour mettre en place des tests de régression après correction de bugs
+- Avant le refactoring de code critique nécessitant une validation
+
+## Requirements
+- Structurer le prompt avec les sections suivantes:
+  1. **SUJET À TESTER**: Description précise du composant, fonction ou module à tester
+  2. **TYPE DE TESTS**: Nature des tests requis (unitaires, intégration, e2e, snapshots)
+  3. **CAS DE TEST**: Liste détaillée des scénarios et cas limites à couvrir
+  4. **DÉPENDANCES**: Services ou composants externes nécessitant des mocks
+  5. **ENVIRONNEMENT**: Configuration ou conditions particulières pour les tests
+  6. **CRITÈRES DE RÉUSSITE**: Définition claire de ce qui constitue un test réussi
+- Fournir des exemples de tests similaires existants comme référence
+- Préciser si les tests doivent utiliser des frameworks/outils spécifiques
+- Indiquer le niveau de couverture de code attendu
+
+## Examples
+<example>
+**Prompt efficace pour création de tests**:
+
+@module/payment/hooks/usePaymentMethod.ts @module/payment/view/PaymentForm.tsx
+
+**SUJET À TESTER**: 
+Le hook usePaymentMethod et le composant PaymentForm qui l'utilise pour gérer les informations de paiement.
+
+**TYPE DE TESTS**:
+- Tests unitaires pour le hook usePaymentMethod
+- Tests d'intégration pour le PaymentForm avec le hook
+- Tests de snapshot pour les différents états du PaymentForm
+
+**CAS DE TEST**:
+Pour usePaymentMethod:
+1. Initialisation avec valeurs par défaut
+2. Ajout d'une nouvelle méthode de paiement
+3. Sélection d'une méthode existante
+4. Suppression d'une méthode de paiement
+5. Gestion des erreurs d'API
+6. Persistance des préférences utilisateur
+
+Pour PaymentForm:
+1. Rendu initial sans méthodes de paiement
+2. Affichage correct des méthodes existantes
+3. Interaction avec le formulaire d'ajout
+4. Validation des entrées (numéros invalides, date expirée)
+5. Soumission réussie et affichage de confirmation
+6. Gestion des erreurs d'API et feedback utilisateur
+
+**DÉPENDANCES**:
+- Service Stripe à mocker
+- Context d'authentification utilisateur
+- API de paiement à mocker avec MSW
+- Storage local pour la persistance
+
+**ENVIRONNEMENT**:
+- Tests à exécuter dans l'environnement Jest standard
+- Configuration spécifique pour simuler les événements Touch
+- État initial du store à configurer avec des méthodes de paiement de test
+
+**CRITÈRES DE RÉUSSITE**:
+- Couverture de code >90% pour le hook
+- Couverture de code >85% pour le composant
+- Validation de tous les cas d'erreur identifiés
+- Tests exécutés sous 5 secondes pour faciliter l'intégration continue
+- Pas de mock excessif qui masquerait les bugs réels
+</example>
+
+<example type="invalid">
+**Prompt inefficace**:
+
+Peux-tu écrire des tests pour le système de paiement? Il faudrait vérifier que ça marche bien.
+</example>
