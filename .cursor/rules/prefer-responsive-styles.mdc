@@ -1,7 +1,7 @@
 ---
 description: Rends l'app responsive en évitant les tailles fixes en pixels, utilise flex ou pourcentages pour s'adapter à tous les écrans.
-globs: **/*
-alwaysApply: true
+globs: 
+alwaysApply: false
 ---
 Description : Rends l'app responsive en évitant les tailles fixes en pixels, utilise flex ou pourcentages pour s'adapter à tous les écrans.  
 

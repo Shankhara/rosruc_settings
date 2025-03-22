@@ -1,0 +1,142 @@
+---
+description: Organise le code selon les principes du Domain Driven Design (DDD) avec une architecture modulaire.
+globs: 
+alwaysApply: false
+---
+# Domain Driven Design
+
+## Context
+- Pour toute application de complexité moyenne à élevée
+- Lorsqu'on travaille sur un module fonctionnel avec une logique métier importante
+- Pour maintenir une séparation claire entre les couches applicatives
+
+## Requirements
+- Structurer chaque fonctionnalité/module avec trois dossiers principaux:
+  - domain: Contient le cœur métier et la logique business (entités, objets valeur, agrégats, services de domaine)
+  - infra: Gère les communications externes et l'infrastructure (API, base de données, device)
+  - view: Responsable de l'interface utilisateur et de l'affichage
+- Utiliser un langage omniprésent (Ubiquitous Language) reflétant le modèle métier
+- Isoler la logique métier dans le domain
+- Gérer les accès aux données externes via l'infrastructure
+- Séparer la présentation dans la view
+- Respecter la responsabilité unique pour chaque couche
+- Définir des bounded contexts clairs pour délimiter les différents domaines métier
+- Structurer le domaine avec des Value Objects et Aggregates pour une modélisation riche
+- Utiliser des Domain Events pour la communication asynchrone entre contextes
+- Implémenter des Domain Services pour les opérations qui ne relèvent pas naturellement d'une entité
+
+## Bounded Contexts
+- Délimiter clairement les frontières de chaque contexte métier (events, users, notifications, etc.)
+- Définir un glossaire spécifique à chaque contexte pour éviter les ambiguïtés
+- Créer des mappings explicites pour la traduction entre contextes différents
+- Éviter la contamination de contexte (un terme ayant des significations différentes selon le contexte)
+
+## Communication entre contextes
+- Préférer l'utilisation de Domain Events pour la communication asynchrone
+- Définir des contrats d'API clairs pour les interactions synchrones
+- Utiliser des Anti-Corruption Layers pour isoler les contextes externes ou legacy
+- Documenter les dépendances entre contextes dans un Context Map
+
+## Examples
+<example>
+// Dans features/user/domain/UserEntity.ts
+export interface UserEntity {
+  id: string;
+  name: string;
+  email: string;
+}
+
+// Value Object: adresse email immutable
+export class EmailAddress {
+  private readonly value: string;
+  
+  constructor(email: string) {
+    if (!this.isValid(email)) {
+      throw new Error(t`Email invalide`);
+    }
+    this.value = email;
+  }
+  
+  private isValid(email: string): boolean {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+  
+  toString(): string {
+    return this.value;
+  }
+  
+  equals(other: EmailAddress): boolean {
+    return this.value === other.value;
+  }
+}
+
+// Domain Service
+export class UserDomainService {
+  validateUserUniqueness(email: EmailAddress, existingUsers: UserEntity[]): boolean {
+    return !existingUsers.some(user => user.email === email.toString());
+  }
+}
+
+// Domain Event
+export class UserCreatedEvent {
+  constructor(public readonly userId: string, public readonly timestamp: Date = new Date()) {}
+}
+
+// Dans features/user/infra/userRepository.ts
+import { UserEntity } from '../domain/UserEntity';
+
+export const fetchUser = async (id: string): Promise<UserEntity> => {
+  try {
+    const response = await fetch(`/api/users/${id}`);
+    return await response.json();
+  } catch (e) {
+    throw new Error(t`Erreur lors du chargement de l'utilisateur`);
+  }
+};
+
+// Dans features/user/view/UserProfile.tsx
+import { useState, useEffect } from 'react';
+import { UserEntity } from '../domain/UserEntity';
+import { fetchUser } from '../infra/userRepository';
+import { Trans } from '@lingui/react/macro';
+
+export function UserProfile({ userId }: { userId: string }) {
+  const [user, setUser] = useState<UserEntity | null>(null);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    async function loadUser() {
+      try {
+        const userData = await fetchUser(userId);
+        setUser(userData);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    
+    loadUser();
+  }, [userId]);
+  
+  if (loading) return <div><Trans>Chargement...</Trans></div>;
+  if (!user) return <div><Trans>Utilisateur non trouvé</Trans></div>;
+  
+  return <div>{user.name}</div>;
+}
+</example>
+
+<example type="invalid">
+// Tout mélangé dans un seul fichier app/components/User.tsx
+function User() {
+  const [user, setUser] = useState(null);
+  
+  useEffect(() => {
+    fetch('/api/users/1')
+      .then(res => res.json())
+      .then(data => setUser(data));
+  }, []);
+  
+  return <div>{user?.name}</div>;
+}
+</example>

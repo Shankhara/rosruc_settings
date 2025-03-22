@@ -1,7 +1,7 @@
 ---
 description: Gère toujours les erreurs des appels async avec try/catch ou .catch(), avec un message traduit.
-globs: **/*
-alwaysApply: true
+globs: 
+alwaysApply: false
 ---
 Description : Gère toujours les erreurs des appels async avec try/catch ou .catch(), avec un message traduit.  
 

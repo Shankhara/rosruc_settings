@@ -1,13 +1,16 @@
 ---
 description: Remplace les if/else ou switch par une table d'objets pour associer des conditions à des valeurs ou fonctions.
-globs: **/*
-alwaysApply: true
+globs: 
+alwaysApply: false
 ---
+# Table de Dispatch
+
 Description : Remplace les if/else ou switch par une table d'objets pour associer des conditions à des valeurs ou fonctions.  
 
-Détails : Ça élimine les comparaisons répétitives et rend le code extensible. Par exemple, pour un statut, utilise un objet au lieu de conditions.  
+Détails : Ça élimine les comparaisons répétitives et rend le code extensible. Pour un statut, un type d'utilisateur ou toute condition à branches multiples, utilise un objet lookup au lieu de conditions en cascade.
 
-Exemple :
+## Exemple de base - Valeurs simples
+
 Avant :
 ```tsx
 function getStatusText(status) {
@@ -24,9 +27,104 @@ function getStatusText(status) {
   const statusMap = {
     loading: "Chargement",
     success: "Succès",
-    error: "Erreur",
-    unknown: "Inconnu"
+    error: "Erreur"
   };
-  return statusMap[status] || statusMap.unknown;
+  return statusMap[status] || "Inconnu";
 }
-``` 
+```
+
+## Exemple avancé - Fonctions
+
+Avant :
+```tsx
+function renderStatus(status, data) {
+  if (status === "loading") return <Loader />;
+  if (status === "success") return <DataView data={data} />;
+  if (status === "error") return <ErrorMessage />;
+  return <EmptyState />;
+}
+```
+
+Après :
+```tsx
+function renderStatus(status, data) {
+  const statusRenderers = {
+    loading: () => <Loader />,
+    success: (data) => <DataView data={data} />,
+    error: () => <ErrorMessage />
+  };
+  
+  const renderer = statusRenderers[status];
+  return renderer ? renderer(data) : <EmptyState />;
+}
+```
+
+## Avec TypeScript
+
+```tsx
+type Status = "loading" | "success" | "error";
+
+// Pour les valeurs simples
+const statusMap: Record<Status, string> = {
+  loading: "Chargement",
+  success: "Succès",
+  error: "Erreur"
+};
+
+// Pour les fonctions
+type StatusRenderer = (data?: any) => React.ReactNode;
+
+const statusRenderers: Record<Status, StatusRenderer> = {
+  loading: () => <Loader />,
+  success: (data) => <DataView data={data} />,
+  error: () => <ErrorMessage />
+};
+```
+
+## Options pour la gestion des valeurs par défaut
+
+```tsx
+// Option 1: Valeur par défaut explicite
+return statusMap[status] || "Valeur par défaut";
+
+// Option 2: Valeur par défaut dans la table
+const statusMap = {
+  loading: "Chargement",
+  success: "Succès",
+  error: "Erreur",
+  default: "Inconnu"
+};
+return statusMap[status] || statusMap.default;
+
+// Option 3: Destructuration avec valeur par défaut
+const { [status]: statusText = "Inconnu" } = statusMap;
+return statusText;
+```
+
+## Paramètres multiples
+
+```tsx
+function getButtonStyle(type, size) {
+  const buttonStyles = {
+    primary: {
+      small: { height: 32, fontSize: 14 },
+      medium: { height: 40, fontSize: 16 },
+      large: { height: 48, fontSize: 18 }
+    },
+    secondary: {
+      small: { height: 30, fontSize: 12 },
+      medium: { height: 38, fontSize: 14 },
+      large: { height: 46, fontSize: 16 }
+    }
+  };
+  
+  return buttonStyles[type]?.[size] || buttonStyles.primary.medium;
+}
+```
+
+## Performances
+
+- Tables de dispatch: Plus performantes pour 3+ conditions grâce à l'accès direct O(1)
+- Idéales pour: Conditions statiques connues à l'avance
+- Préférer switch pour: Opérations numériques avec expressions et peu de cas (<3)
+- Avantage majeur: Facilité d'extension sans modifier le code existant

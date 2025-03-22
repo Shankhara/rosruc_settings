@@ -1,7 +1,7 @@
 ---
-description: Mets chaque logique conditionnelle dans une fonction séparée et choisis-la dynamiquement, comme des stratégies.
-globs: **/*
-alwaysApply: true
+description: Mets chaque logique conditionnelle dans une fonction séparée et choisis-la dynamiquement, comme des stratégies. 
+globs: 
+alwaysApply: false
 ---
 Description : Mets chaque logique conditionnelle dans une fonction séparée et choisis-la dynamiquement, comme des stratégies.  
 

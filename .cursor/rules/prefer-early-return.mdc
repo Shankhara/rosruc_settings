@@ -1,7 +1,7 @@
 ---
-description: Utilise des retours anticipés pour sortir d'une fonction dès qu'une condition est remplie, au lieu d'empiler des if/else.
-globs: **/*
-alwaysApply: true
+description: Utilise des retours anticipés pour sortir d'une fonction dès qu'une condition est remplie, au lieu d'empiler des if/else. 
+globs: 
+alwaysApply: false
 ---
 Description : Utilise des retours anticipés pour sortir d'une fonction dès qu'une condition est remplie, au lieu d'empiler des if/else.  
 

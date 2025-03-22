@@ -1,7 +1,7 @@
 ---
 description: Optimise les perfs avec `React.memo`, `useMemo`, ou `useCallback` pour éviter les recalculs inutiles.
-globs: **/*
-alwaysApply: true
+globs: 
+alwaysApply: false
 ---
 Description : Optimise les perfs avec `React.memo`, `useMemo`, ou `useCallback` pour éviter les recalculs inutiles.  
 

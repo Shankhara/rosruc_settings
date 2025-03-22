@@ -1,7 +1,7 @@
 ---
-description: 
+description: Structurer les demandes de création de tests pour assurer une couverture adéquate et une validation fiable du code
 globs: 
-alwaysApply: true
+alwaysApply: false
 ---
 ---
 description: Structurer les demandes de création de tests pour assurer une couverture adéquate et une validation fiable du code

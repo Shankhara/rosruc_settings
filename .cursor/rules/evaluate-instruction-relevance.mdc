@@ -1,6 +1,7 @@
 ---
-description: Analyser systématiquement la pertinence technique des instructions pour optimiser l'architecture et éviter la redondance
-globs: **/*.{js,jsx,ts,tsx}
+description: 
+globs: 
+alwaysApply: true
 ---
 
 # Évaluation critique des instructions

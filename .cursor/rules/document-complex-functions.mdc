@@ -1,7 +1,7 @@
 ---
 description: Documente les fonctions ou composants complexes avec JSDoc pour expliquer leur intention.
-globs: **/*
-alwaysApply: true
+globs: 
+alwaysApply: false
 ---
 Description : Documente les fonctions ou composants complexes avec JSDoc pour expliquer leur intention.  
 

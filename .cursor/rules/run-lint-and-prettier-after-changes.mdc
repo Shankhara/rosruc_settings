@@ -3,19 +3,33 @@ description: À la fin de chaque modification de code, lancer automatiquement le
 globs: 
 alwaysApply: true
 ---
-Détails : Après avoir effectué des changements dans le code, vérifier que les modifications respectent les standards du projet en lançant les outils de vérification (ESLint, TypeScript) et de formatage (Prettier), puis corriger toutes les erreurs avant de finaliser.  
+---
+description: À la fin de chaque modification de code, lancer automatiquement le linter et prettier pour identifier et corriger les erreurs de formatage et de style.
+globs: 
+alwaysApply: true
+---
+Détails : Après avoir effectué des changements dans le code, vérifier que les modifications respectent les standards du projet en lançant les outils de vérification (ESLint, TypeScript) et de formatage (Prettier) avec les options optimisées pour la performance, puis corriger toutes les erreurs avant de finaliser.  
 
 Exemple :
 Processus typique :
 ```bash
-# Après avoir modifié le code
-yarn lint
-# Corriger les erreurs de lint si nécessaire
+# Vérifier les types TypeScript
+yarn typecheck
+# Utilise --incremental et --noEmit pour des vérifications plus rapides
 
+# Vérifier et corriger les problèmes de lint
+yarn lint:fix
+# Utilise --cache et corrige automatiquement les erreurs simples
+
+# Formater le code
 yarn format
-# Vérifier que le formatage est correct
+# Formate le code avec --cache pour une exécution rapide
+
+# Alternative tout-en-un
+yarn quality
+# Exécute TypeScript, ESLint et Prettier en séquence optimisée
 
 # Confirmer que le code est propre avant de terminer
 ```
 
-Le but est d'assurer que chaque contribution respecte automatiquement les conventions du projet et maintient une qualité de code constante.
+Ces commandes optimisées utilisent le cache et les compilations incrémentielles pour accélérer l'exécution et sont configurées dans package.json. Le but est d'assurer que chaque contribution respecte automatiquement les conventions du projet tout en minimisant le temps d'attente pour les développeurs.

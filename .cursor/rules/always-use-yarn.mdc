@@ -1,7 +1,7 @@
 ---
-description: 
+description:  Ne jamais utiliser npm, pnpm ou autre gestionnaire de paquets. Toutes les commandes de gestion de dépendances, d'exécution de scripts ou d'installation doivent utiliser la syntaxe Yarn. 
 globs: 
-alwaysApply: true
+alwaysApply: false
 ---
 Détails : Ne jamais utiliser npm, pnpm ou autre gestionnaire de paquets. Toutes les commandes de gestion de dépendances, d'exécution de scripts ou d'installation doivent utiliser la syntaxe Yarn.  
 

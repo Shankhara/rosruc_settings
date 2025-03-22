@@ -1,7 +1,7 @@
 ---
 description: Ne code jamais les textes affichables en dur, utilise l'internationalisation (i18n) avec `<Trans>` ou `t`.
-globs: **/*
-alwaysApply: true
+globs: 
+alwaysApply: false
 ---
 Description : Ne code jamais les textes affichables en dur, utilise l'internationalisation (i18n) avec `<Trans>` ou `t`.  
 

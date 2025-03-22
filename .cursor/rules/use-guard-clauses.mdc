@@ -1,7 +1,7 @@
 ---
 description: Vérifie les conditions critiques au début d'une fonction et sors directement si elles échouent, comme un vigile à l'entrée.
-globs: **/*
-alwaysApply: true
+globs: 
+alwaysApply: false
 ---
 Description : Vérifie les conditions critiques au début d'une fonction et sors directement si elles échouent, comme un vigile à l'entrée.  
 

@@ -1,7 +1,7 @@
 ---
 description: Utilise React Query intelligemment avec des Query Keys claires, un cache optimisé, et une gestion d'état.
-globs: **/*
-alwaysApply: true
+globs: 
+alwaysApply: false
 ---
 Description : Utilise React Query intelligemment avec des Query Keys claires, un cache optimisé, et une gestion d'état.  
 

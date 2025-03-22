@@ -1,7 +1,7 @@
 ---
-description: 
+description: Fournir un modèle structuré pour diagnostiquer et corriger efficacement les bugs dans l'application
 globs: 
-alwaysApply: true
+alwaysApply: false
 ---
 ---
 description: Fournir un modèle structuré pour diagnostiquer et corriger efficacement les bugs dans l'application

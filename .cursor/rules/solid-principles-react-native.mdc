@@ -1,7 +1,7 @@
 ---
-description: 
+description: Appliquer les principes SOLID adaptés à React Native pour créer du code modulaire, évolutif et maintenable
 globs: 
-alwaysApply: true
+alwaysApply: false
 ---
 ---
 description: Appliquer les principes SOLID adaptés à React Native pour créer du code modulaire, évolutif et maintenable

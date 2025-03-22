@@ -1,7 +1,7 @@
 ---
 description: Gère les états (loading, success, error) avec une structure centralisée comme un reducer, au lieu de multiples if.
-globs: **/*
-alwaysApply: true
+globs: 
+alwaysApply: false
 ---
 Description : Gère les états (loading, success, error) avec une structure centralisée comme un reducer, au lieu de multiples if.  
 

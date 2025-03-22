@@ -1,11 +1,12 @@
 ---
-description: 
+description: Privilégier une excellence technique pragmatique qui équilibre la rigueur du code avec les contraintes business et les délais projet
 globs: 
-alwaysApply: true
+alwaysApply: false
 ---
 ---
 description: Privilégier une excellence technique pragmatique qui équilibre la rigueur du code avec les contraintes business et les délais projet
 globs: **/*.{js,jsx,ts,tsx}
+alwaysApply: true
 ---
 
 # Excellence technique pragmatique
@@ -14,33 +15,115 @@ globs: **/*.{js,jsx,ts,tsx}
 - Pour les décisions techniques quotidiennes
 - Lors de l'arbitrage entre perfection technique et délais
 - Pour déterminer quand optimiser et quand simplifier
+- Pour communiquer des compromis techniques aux parties prenantes non-techniques
 
 ## Requirements
-- Évaluer chaque décision technique selon une matrice impact/effort
-- Identifier clairement la dette technique consciente vs. accidentelle
-- Prioriser les optimisations ayant un impact mesurable sur l'expérience utilisateur
-- Documentez les compromis techniques avec leur justification
-- Favoriser les solutions qui apportent 80% de la valeur avec 20% de l'effort
+- Évaluer chaque décision technique selon une matrice impact/effort avec 4 quadrants explicites
+- Identifier clairement la dette technique consciente vs. accidentelle en utilisant le format standardisé
+- Prioriser les optimisations ayant un impact mesurable sur l'expérience utilisateur (temps de chargement, fluidité, utilisation mémoire)
+- Documenter les compromis techniques avec leur justification business/technique
+- Favoriser les solutions qui apportent 80% de la valeur avec 20% de l'effort (principe de Pareto)
 - Identifier au moins 3 critères mesurables pour évaluer le succès d'une implémentation
+- Présenter les options techniques avec leurs avantages/inconvénients aux parties prenantes en langage accessible
+
+## Format de documentation de la dette technique
+```tsx
+/**
+ * @debt [performance|maintenabilité|sécurité|UX|accessibilité]
+ * @impact [critique|élevé|moyen|faible] - Impact sur [utilisateurs|développeurs|système]
+ * @cause Explication concise de la raison (contrainte de temps, limite technique, etc.)
+ * @solution Approche idéale: description de la solution technique optimale
+ * @compromis Approche actuelle: description de l'implémentation choisie
+ * @plan Planifié pour [date/sprint] | À adresser lors de [trigger event]
+ */
+```
+
+## Format de présentation des compromis techniques
+1. **Contexte business**: Pourquoi cette fonctionnalité est importante (1-2 phrases)
+2. **Options envisagées**: Liste des approches (2-3 max) avec pros/cons
+3. **Recommandation**: Option choisie avec 3 critères de réussite mesurables
+4. **Implications**: Conséquences immédiates et futures de cette décision
+5. **Plan d'évolution**: Comment cette solution évoluera dans le temps
 
 ## Examples
 <example>
-**Analyse pragmatique**:
+**Analyse pragmatique - Matrice impact/effort**:
 
-Pour l'optimisation des performances du composant ListItem:
+Pour l'intégration d'un nouveau système de paiement dans notre application:
 
-**Matrice impact/effort**:
-- Haute priorité: Virtualisation de la liste (haut impact/effort modéré)
-- Moyenne priorité: Mémoisation des items (impact modéré/effort faible)
-- Basse priorité: Lazy loading des images (impact faible/effort élevé)
+```
+┌─────────────────────┬─────────────────────┐
+│ FORTE VALEUR        │ INVESTISSEMENT      │
+│ FAIBLE EFFORT       │ STRATÉGIQUE         │
+│                     │                     │
+│ - Mémoisation des   │ - Virtualisation de │
+│   composants liste  │   la FlatList       │
+│ - Cache des requêtes│ - Migration du state│
+│   API existantes    │   vers Redux Toolkit│
+├─────────────────────┼─────────────────────┤
+│ FAIBLE PRIORITÉ     │ SUR-INGÉNIERIE      │
+│                     │                     │
+│ - Refactorisation   │ - Système analytics │
+│   des styles legacy │   temps réel custom │
+│ - Migration partielle│- Optimisation SSR  │
+│   TypeScript        │   complète          │
+└─────────────────────┴─────────────────────┘
+   FAIBLE IMPACT         FORT IMPACT
+   FAIBLE EFFORT         FORT EFFORT
+```
 
 **Dette technique documentée**:
 ```tsx
-// TODO(performance): L'approche actuelle cause des re-rendus inutiles.
-// Solution idéale: Refactoriser en composants purs avec mémoisation.
-// Décision: Implémenter maintenant la virtualisation (impact immédiat)
-// et planifier la refactorisation pour le sprint 34.
+/**
+ * @debt performance
+ * @impact élevé - Impact sur utilisateurs avec appareils bas/moyen de gamme
+ * @cause Contrainte de temps pour le lancement de la v2 du produit
+ * @solution Approche idéale: Virtualisation complète + pagination optimisée
+ * @compromis Approche actuelle: Chargement par lots de 20 sans virtualisation
+ * @plan Planifié pour Sprint 34 | À adresser si +500ms de temps de chargement en prod
+ */
+export function ProductList({ products }) {
+  // Implémentation actuelle avec dette technique connue
+  return (
+    <ScrollView>
+      {products.map(product => (
+        <ProductItem key={product.id} product={product} />
+      ))}
+    </ScrollView>
+  );
+}
 ```
+
+**Exemple de présentation d'un compromis technique**:
+
+**Contexte business**: L'intégration rapide du paiement Apple Pay est cruciale pour augmenter notre conversion de 15% avant la saison des fêtes.
+
+**Options envisagées**:
+1. **SDK natif complet**: Intégration complète et personnalisée
+   - ✅ Expérience utilisateur optimale
+   - ✅ Contrôle total du flow
+   - ❌ 4-6 semaines de développement
+   - ❌ Maintenance élevée
+
+2. **Intégration via Stripe**: Solution prête à l'emploi
+   - ✅ Déploiement en 1-2 semaines
+   - ✅ Maintenance assurée par Stripe
+   - ❌ Personnalisation limitée
+   - ❌ Commission supplémentaire de 0.5%
+
+**Recommandation**: Option 2 (Stripe) avec les critères de succès:
+1. Augmentation du taux de conversion de 10%+
+2. Temps de complétion du paiement < 30 secondes
+3. Taux d'erreur de paiement < 3%
+
+**Implications**:
+- Court terme: Déploiement rapide avec UX acceptable
+- Long terme: Commission cumulée (+10K€/an estimés)
+
+**Plan d'évolution**:
+- Lancer avec Stripe immédiatement
+- Évaluer le ROI après 3 mois
+- Décider d'une migration vers SDK natif pour Q2 si volume > 500K€
 
 **Métriques de succès**:
 1. Temps de premier rendu réduit de >30%
@@ -51,9 +134,25 @@ Cette approche équilibre la qualité technique avec les contraintes de délai t
 </example>
 
 <example type="invalid">
-**Sur-ingénierie**:
-Passer deux semaines à optimiser un composant rarement utilisé pour gagner 5ms de performance.
+**Sur-ingénierie sans évaluation pragmatique**:
+```tsx
+// Optimisation excessive sans mesure d'impact
+const ProductName = React.memo(({ name }) => {
+  // Deep memoization avec comparaison personnalisée pour un simple text
+  return <Text style={complexInlineStyles}>{name}</Text>;
+});
 
-**Sous-ingénierie**:
-Ignorer complètement les problèmes de performance connus sans les documenter ni les planifier.
-</example> 
+// Commentaire vague sans plan concret
+// TODO: Rendre ça meilleur plus tard
+```
+
+**Sous-ingénierie sans documentation**:
+```tsx
+// Ignorer des problèmes évidents sans documentation
+function loadAllProducts() {
+  // Charge potentiellement des milliers de produits sans pagination
+  // ni virtualisation, sans documenter cette limitation connue
+  fetch('/api/all-products').then(/* ... */);
+}
+```
+</example>

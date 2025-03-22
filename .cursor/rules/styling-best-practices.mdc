@@ -1,0 +1,196 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# Utilisation d'Emotion et du Design System
+
+## Context
+- Pour tous les composants React Native nécessitant du styling
+- Pour maintenir une cohérence visuelle et technique dans la base de code
+- Pour faciliter la maintenance et l'évolution des styles
+- Pour garantir une expérience utilisateur uniforme
+
+## Requirements
+- Importer styled UNIQUEMENT depuis '@emotion/native'
+- Utiliser la syntaxe de fonction avec des objets pour les styles: styled(Component)({})
+- NE JAMAIS utiliser StyleSheet de React Native
+- NE JAMAIS utiliser de styles inline dans les props style
+- NE JAMAIS utiliser de valeurs codées en dur (couleurs, espacements, tailles)
+- TOUJOURS utiliser les tokens du thème via theme.color, theme.spaceSize, etc.
+- Appliquer des styles conditionnels via des props typées
+- Typer les props des composants styled avec TypeScript
+- Organiser les styles en composants réutilisables
+- Favoriser la composition de composants plutôt que la duplication de styles
+
+## Structure recommandée
+
+### 1. Organisation des fichiers
+```
+components/
+  Button/
+    Button.tsx       # Composant principal
+    Button.styles.ts # Styles séparés (optionnel pour les composants complexes)
+    index.ts         # Export public
+```
+
+## Examples
+
+### Utilisation basique
+<example>
+// ✅ Import correct
+import styled from '@emotion/native';
+import { TouchableOpacity, View, Text } from 'react-native';
+import { theme } from '@/theme';
+
+// ✅ Composant simple avec Emotion et Design System
+const Container = styled(View)({
+  width: '100%',
+  padding: theme.spaceSize(2.5),
+  flexDirection: 'row',
+  justifyContent: 'center',
+});
+
+// ✅ Composant avec props typées, styles conditionnels et design system
+const Button = styled(TouchableOpacity)<{
+  disabled?: boolean;
+  isLoading?: boolean;
+}>(({ isLoading, disabled }) => ({
+  paddingVertical: theme.spaceSize(1.5),
+  borderRadius: theme.borderRadius.md,
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: theme.color.primary,
+  opacity: (isLoading || disabled) ? 0.7 : 1,
+}));
+
+// ✅ Utilisation
+function MyComponent() {
+  return (
+    <Container>
+      <Button disabled={false} isLoading={true}>
+        Click Me
+      </Button>
+    </Container>
+  );
+}
+</example>
+
+### Composants complexes avec styles séparés
+<example>
+// Button.styles.ts
+import styled from '@emotion/native';
+import { TouchableOpacity, Text } from 'react-native';
+import { theme } from '@/theme';
+
+export const ButtonContainer = styled(TouchableOpacity)<{
+  variant?: 'primary' | 'secondary';
+  disabled?: boolean;
+}>(({ variant = 'primary', disabled }) => ({
+  padding: theme.spaceSize(1.5),
+  borderRadius: theme.borderRadius.md,
+  alignItems: 'center',
+  backgroundColor: variant === 'primary' ? theme.color.primary : 'transparent',
+  borderWidth: variant === 'secondary' ? 1 : 0,
+  borderColor: theme.color.primary,
+  opacity: disabled ? 0.6 : 1,
+}));
+
+export const ButtonText = styled(Text)<{
+  variant?: 'primary' | 'secondary';
+}>(({ variant = 'primary' }) => ({
+  color: variant === 'primary' ? theme.color.white : theme.color.primary,
+  fontWeight: theme.fontWeight.semiBold,
+}));
+
+// Button.tsx
+import React from 'react';
+import { ButtonContainer, ButtonText } from './Button.styles';
+
+export interface ButtonProps {
+  title: string;
+  onPress: () => void;
+  variant?: 'primary' | 'secondary';
+  disabled?: boolean;
+}
+
+export const Button = ({ title, onPress, variant = 'primary', disabled }: ButtonProps) => (
+  <ButtonContainer variant={variant} disabled={disabled} onPress={onPress}>
+    <ButtonText variant={variant}>{title}</ButtonText>
+  </ButtonContainer>
+);
+</example>
+
+### Réutilisation des styles
+<example>
+// Factoriser les styles communs avec le design system
+const baseTextStyles = {
+  fontFamily: theme.fontFamily.system,
+  color: theme.color.text,
+};
+
+const Heading = styled(Text)({
+  ...baseTextStyles,
+  fontSize: theme.fontSize.xl,
+  fontWeight: theme.fontWeight.bold,
+});
+
+const Paragraph = styled(Text)({
+  ...baseTextStyles,
+  fontSize: theme.fontSize.md,
+  lineHeight: theme.lineHeight.md,
+});
+</example>
+
+### Anti-patterns à éviter
+<example type="invalid">
+// ❌ Ne pas utiliser les template literals (ancienne syntaxe)
+const Container = styled.View`
+  width: 100%;
+  padding: 20px;
+`;
+
+// ❌ Ne JAMAIS utiliser StyleSheet de React Native
+import { StyleSheet } from 'react-native';
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    padding: 20,
+  },
+});
+
+// ❌ Ne pas utiliser de styles inline
+function BadComponent() {
+  return (
+    <View style={{ padding: 20, margin: 10 }}>
+      <Text>Texte</Text>
+    </View>
+  );
+}
+
+// ❌ Ne pas utiliser de valeurs codées en dur
+const BadButton = styled(TouchableOpacity)({
+  backgroundColor: '#3498db', // ❌ Non! Utiliser theme.color.primary
+  padding: 16,               // ❌ Non! Utiliser theme.spaceSize(2)
+  borderRadius: 8,           // ❌ Non! Utiliser theme.borderRadius.md
+});
+
+// ❌ Éviter les composants sans typage
+const UntypedButton = styled(TouchableOpacity)(props => ({
+  // props non typées = risque d'erreurs
+  backgroundColor: props.primary ? theme.color.primary : theme.color.gray,
+}));
+</example>
+
+## Processus pour étendre le design system
+Si une valeur manque dans le thème:
+1. Vérifier si une valeur existante peut être réutilisée de manière sémantique
+2. Proposer l'ajout au thème avec un nom significatif lié à son usage
+3. Temporairement, utiliser une constante locale en attendant l'intégration au thème
+
+## Conseils d'optimisation
+- Définir les composants stylisés en dehors des render functions
+- Mémoiser les composants avec React.memo quand nécessaire
+- Éviter de créer de nouveaux composants stylisés à chaque rendu
+- Utiliser des tokens sémantiques du thème plutôt que des tokens techniques

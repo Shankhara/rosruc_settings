@@ -1,7 +1,7 @@
 ---
-description: 
+description: Double négation (!!) pour le rendu conditionnel
 globs: 
-alwaysApply: true
+alwaysApply: false
 ---
 # Règle : Double négation (!!) pour le rendu conditionnel
 

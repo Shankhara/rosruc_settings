@@ -1,7 +1,7 @@
 ---
-description: 
+description:  Markdown Documentation Standards
 globs: 
-alwaysApply: true
+alwaysApply: false
 ---
 # Markdown Documentation Standards
 

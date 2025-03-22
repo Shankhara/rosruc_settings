@@ -1,7 +1,7 @@
 ---
-description: 
+description: Ne jamais désactiver les règles du linter sans raison valide. Résoudre les problèmes en améliorant le code, pas en ignorant les avertissements. Pour les rares exceptions justifiées, ajouter un commentaire explicatif et limiter la portée au minimum.
 globs: 
-alwaysApply: true
+alwaysApply: false
 ---
 ## Contexte
 - Pour tous les projets utilisant des outils d'analyse statique (ESLint, TSLint, etc.)

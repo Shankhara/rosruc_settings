@@ -1,7 +1,7 @@
 ---
-description: 
+description: Formuler les demandes de refactoring de manière structurée pour assurer une amélioration du code sans altérer son comportement
 globs: 
-alwaysApply: true
+alwaysApply: false
 ---
 ---
 description: Formuler les demandes de refactoring de manière structurée pour assurer une amélioration du code sans altérer son comportement

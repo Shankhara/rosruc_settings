@@ -1,20 +1,62 @@
 ---
 description: Remplace les valeurs magiques (ex. `110`, `#fff`) par des constantes ou des valeurs du thème.
-globs: **/*
-alwaysApply: true
+globs: 
+alwaysApply: false
 ---
-Description : Remplace les valeurs magiques (ex. `110`, `#fff`) par des constantes ou des valeurs du thème.  
+Description: Remplace toutes les valeurs codées en dur par des constantes nommées ou des valeurs du thème pour améliorer la lisibilité et la maintenabilité.
 
-Détails : Par exemple, utilise `const NAV_BAR_OFFSET = 110` au lieu de `paddingBottom: 110` codé en dur.  
+Détails: Les valeurs magiques (nombres, chaînes, couleurs) rendent le code difficile à comprendre et à maintenir. Utilise des constantes avec des noms explicites qui décrivent leur intention.
 
-Exemple :
-Avant :
-```tsx
-const sectionListStyle = { paddingBottom: 110 };
-```
+Où définir les constantes:
+- Constantes locales: Dans le même fichier si utilisées une seule fois
+- Constantes de module: Dans un fichier constants.ts du module si partagées
+- Constantes globales: Dans theme.ts ou constants.ts global si utilisées partout
 
-Après :
-```tsx
-const NAV_BAR_OFFSET = 110;
-const sectionListStyle = { paddingBottom: NAV_BAR_OFFSET };
-``` 
+Exemples:
+
+// ❌ Avant - Valeurs magiques
+function fetchData() {
+  return axios.get('/api/data').then(res => {
+    if (res.data.length > 100) {
+      return res.data.slice(0, 100);
+    }
+    return res.data;
+  }).catch(() => {
+    setTimeout(fetchData, 3000);
+  });
+}
+
+const Container = styled.View({
+  padding: 16,
+  backgroundColor: '#f5f5f5',
+  height: 56
+});
+
+// ✅ Après - Constantes nommées
+// Dans constants.ts du module
+export const MAX_ITEMS_PER_PAGE = 100;
+export const RETRY_DELAY_MS = 3000;
+
+// Dans le composant
+import { MAX_ITEMS_PER_PAGE, RETRY_DELAY_MS } from './constants';
+import { theme } from '@/theme';
+
+function fetchData() {
+  return axios.get('/api/data').then(res => {
+    if (res.data.length > MAX_ITEMS_PER_PAGE) {
+      return res.data.slice(0, MAX_ITEMS_PER_PAGE);
+    }
+    return res.data;
+  }).catch(() => {
+    setTimeout(fetchData, RETRY_DELAY_MS);
+  });
+}
+
+// Constantes liées au design system
+const HEADER_HEIGHT = 56;
+
+const Container = styled.View({
+  padding: theme.spacing.medium,
+  backgroundColor: theme.colors.background.secondary,
+  height: HEADER_HEIGHT
+});

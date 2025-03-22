@@ -1,7 +1,7 @@
 ---
-description: 
+description: Analyser exhaustivement le code pertinent avant modification pour comprendre les dépendances et garantir la cohérence de l'implémentation
 globs: 
-alwaysApply: true
+alwaysApply: false
 ---
  ---
 description: Analyser exhaustivement le code pertinent avant modification pour comprendre les dépendances et garantir la cohérence de l'implémentation

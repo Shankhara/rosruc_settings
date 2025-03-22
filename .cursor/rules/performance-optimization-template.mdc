@@ -1,7 +1,7 @@
 ---
-description: 
+description: Guider la formulation des demandes d'optimisation de performance pour cibler efficacement les problèmes et mesurer les améliorations
 globs: 
-alwaysApply: true
+alwaysApply: false
 ---
 ---
 description: Guider la formulation des demandes d'optimisation de performance pour cibler efficacement les problèmes et mesurer les améliorations

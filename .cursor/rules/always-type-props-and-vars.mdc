@@ -1,7 +1,7 @@
 ---
 description: Type toujours les props et variables avec TypeScript pour éviter les bugs et aider Cursor.
-globs: **/*
-alwaysApply: true
+globs: 
+alwaysApply: false
 ---
 Description : Type toujours les props et variables avec TypeScript pour éviter les bugs et aider Cursor.  
 

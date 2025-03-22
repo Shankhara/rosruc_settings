@@ -1,7 +1,7 @@
 ---
 description: Simplifie les petits if/else avec des ternaires ou des opérateurs logiques dans le JSX ou les assignations.
-globs: **/*
-alwaysApply: true
+globs: 
+alwaysApply: false
 ---
 Description : Simplifie les petits if/else avec des ternaires ou des opérateurs logiques dans le JSX ou les assignations.  
 

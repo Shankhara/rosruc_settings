@@ -1,7 +1,7 @@
 ---
-description: Évite de répéter du code ou des logiques (DRY : Don't Repeat Yourself) en factorisant dans des variables ou fonctions.
-globs: **/*
-alwaysApply: true
+description: Évite de répéter du code ou des logiques (DRY : Don't Repeat Yourself) en factorisant dans des variables ou fonctions
+globs: 
+alwaysApply: false
 ---
 Description : Évite de répéter du code ou des logiques (DRY : Don't Repeat Yourself) en factorisant dans des variables ou fonctions.  
 

@@ -1,7 +1,7 @@
 ---
 description: Interdis les margins, le parent doit gérer l'espace avec du padding pour une mise en page prévisible.
-globs: **/*
-alwaysApply: true
+globs: 
+alwaysApply: false
 ---
 Description : Interdis les margins, le parent doit gérer l'espace avec du padding pour une mise en page prévisible.  
 
