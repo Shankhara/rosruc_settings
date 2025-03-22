@@ -1,0 +1,78 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Formuler les demandes de refactoring de manière structurée pour assurer une amélioration du code sans altérer son comportement
+globs: **/*.{js,jsx,ts,tsx}
+---
+
+# Template de prompt pour refactoring de code
+
+## Context
+- Lors d'une amélioration de la structure du code sans changer son comportement
+- Pour l'application de patterns architecturaux ou de principes de conception
+- Avant une modification majeure de la base de code
+
+## Requirements
+- Structurer le prompt avec les sections suivantes:
+  1. **MOTIVATION**: Raison claire du besoin de refactoring (dette technique, performances, maintenabilité)
+  2. **CODE ACTUEL**: Description ou référence au code qui nécessite un refactoring
+  3. **PROBLÈMES IDENTIFIÉS**: Liste des points faibles spécifiques du code actuel
+  4. **ARCHITECTURE CIBLE**: Description de la structure souhaitée après refactoring
+  5. **PATTERNS À APPLIQUER**: Principes de conception ou patterns à introduire/respecter
+  6. **APPROCHE PROPOSÉE**: Stratégie de refactoring préférée (étapes, méthode)
+  7. **CONTRAINTES**: Limites ou exigences particulières à respecter
+- Préciser si le comportement observable doit rester strictement identique
+- Indiquer les tests existants qui valideront la non-régression
+- Identifier les risques potentiels et les plans d'atténuation
+
+## Examples
+<example>
+**Prompt efficace pour refactoring**:
+
+@module/onboarding @app/(guest)/onboarding
+
+**MOTIVATION**: 
+Le code actuel mélange les responsabilités d'interface utilisateur, de logique métier et d'accès aux données, rendant la maintenance difficile et les tests impossibles.
+
+**CODE ACTUEL**:
+L'onboarding est actuellement structuré avec des dossiers domain/, infra/ et ui/ à l'intérieur du dossier app/(guest)/onboarding, ce qui ne respecte pas notre architecture DDD.
+
+**PROBLÈMES IDENTIFIÉS**:
+- Mélange des responsabilités dans les fichiers de page
+- Logique métier directement dans les composants UI
+- Types et schémas de validation dupliqués
+- Accès directs à Supabase depuis les composants
+
+**ARCHITECTURE CIBLE**:
+- app/(guest)/onboarding/ : uniquement les fichiers liés à la navigation/routage
+- module/onboarding/ : organisé selon DDD avec domain/, infra/ et view/
+- module/account/ : extraire la logique de gestion des comptes
+
+**PATTERNS À APPLIQUER**:
+- Séparation des préoccupations (SoC)
+- Injection de dépendances pour l'accès aux services
+- Repository pattern pour l'accès aux données
+- Principe de responsabilité unique
+
+**APPROCHE PROPOSÉE**:
+1. Créer d'abord la structure dans les modules
+2. Extraire la logique métier dans domain/
+3. Déplacer les services d'accès aux données dans infra/
+4. Refactorer les composants UI pour qu'ils consomment les services
+5. Mettre à jour les pages pour assembler les composants
+
+**CONTRAINTES**:
+- Aucune régression fonctionnelle permise
+- Conserver la compatibilité avec le système de routage d'Expo
+- Garder une tracabilité claire entre l'ancienne et la nouvelle structure
+- Maintenir les tests existants ou en créer de nouveaux
+</example>
+
+<example type="invalid">
+**Prompt inefficace**:
+
+Le code dans onboarding est mal organisé, il faudrait le refactorer pour mieux suivre DDD et séparer la logique.
+</example>
