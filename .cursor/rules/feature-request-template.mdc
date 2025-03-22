@@ -1,0 +1,86 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+description: Structurer les demandes de nouvelles fonctionnalités pour garantir une implémentation précise et conforme aux besoins
+globs: **/*.{js,jsx,ts,tsx}
+---
+
+# Template de prompt pour nouvelle fonctionnalité
+
+## Context
+- Lors de la demande d'ajout d'une nouvelle capacité à l'application
+- Pour l'implémentation de comportements ou composants inédits
+- Avant la planification d'un développement significatif
+
+## Requirements
+- Structurer le prompt avec les sections suivantes:
+  1. **OBJECTIF**: Description concise de la fonctionnalité et sa valeur ajoutée
+  2. **FICHIERS CONCERNÉS**: Liste des fichiers existants ou à créer (avec @)
+  3. **COMPORTEMENT DÉTAILLÉ**: Spécification complète du fonctionnement attendu
+  4. **FLUX UTILISATEUR**: Description des interactions utilisateur étape par étape
+  5. **ÉTATS & TRANSITIONS**: Les différents états de la fonctionnalité et leurs transitions
+  6. **CONTRAINTES TECHNIQUES**: Architecture, patterns et standards à respecter
+  7. **CRITÈRES D'ACCEPTATION**: Comment vérifier que la fonctionnalité est correctement implémentée
+- Fournir des références visuelles ou exemples similaires quand pertinent
+- Spécifier les intégrations avec les fonctionnalités existantes
+- Indiquer les cas limites à gérer
+
+## Examples
+<example>
+**Prompt efficace pour nouvelle fonctionnalité**:
+
+@TicketPage.tsx @module/payment/view/PaymentMethodSelector.tsx
+
+**OBJECTIF**: 
+Permettre aux utilisateurs de sélectionner et enregistrer différentes méthodes de paiement pour faciliter les achats futurs.
+
+**FICHIERS CONCERNÉS**:
+- @module/payment/domain/PaymentMethodEntity.ts (à créer)
+- @module/payment/infra/paymentMethodRepository.ts (à créer)
+- @module/payment/view/PaymentMethodSelector.tsx (à modifier)
+- @module/payment/hooks/usePaymentMethods.ts (à créer)
+
+**COMPORTEMENT DÉTAILLÉ**:
+- Afficher une liste des méthodes de paiement enregistrées
+- Permettre l'ajout d'une nouvelle carte via un bottom sheet
+- Permettre la sélection d'une méthode par défaut
+- Offrir la possibilité de supprimer une méthode existante
+
+**FLUX UTILISATEUR**:
+1. L'utilisateur accède à l'écran de paiement
+2. Il voit sa méthode par défaut sélectionnée (si existante)
+3. Il peut cliquer sur "Ajouter une carte" pour ouvrir un bottom sheet
+4. Dans ce bottom sheet, il saisit les informations de carte
+5. Après validation, la carte apparaît dans la liste des méthodes disponibles
+6. L'utilisateur peut sélectionner une méthode via radio button
+
+**ÉTATS & TRANSITIONS**:
+- État initial: liste des méthodes actuelles (ou vide)
+- Chargement: pendant la récupération des méthodes
+- Ajout: formulaire ouvert dans bottom sheet
+- Confirmation: après ajout réussi
+- Erreur: si échec de l'ajout/suppression
+
+**CONTRAINTES TECHNIQUES**:
+- Respecter l'architecture DDD (domain/infra/view)
+- Utiliser des hooks React Query pour la gestion du cache
+- Assurer la validation des données côté client
+- Suivre les principes de React.memo pour optimiser les performances
+- Maintenir l'accessibilité avec les labels appropriés
+
+**CRITÈRES D'ACCEPTATION**:
+- Les méthodes de paiement sont correctement sauvegardées et récupérées
+- La validation des formulaires empêche les saisies incorrectes
+- Les erreurs API sont correctement gérées avec messages utilisateur
+- Les animations de transition sont fluides
+- Le processus fonctionne sur iOS et Android
+</example>
+
+<example type="invalid">
+**Prompt inefficace**:
+
+Il faudrait ajouter la possibilité d'enregistrer plusieurs cartes bancaires dans l'app. Les utilisateurs veulent pouvoir choisir quelle carte utiliser pour payer.
+</example>
