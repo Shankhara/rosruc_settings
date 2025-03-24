@@ -1,0 +1,192 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+---
+description: Guide structuré pour formuler des demandes de design UI/UX efficaces dans Cursor Composer, intégrant les meilleures pratiques pour une génération précise et cohérente
+globs: **/*.{js,jsx,ts,tsx}
+---
+
+# Template de Prompt pour Design et Style UI
+
+## Context
+- Pour la création ou modification de composants visuels
+- Pour l'intégration de maquettes Figma en code
+- Pour assurer la cohérence visuelle dans l'application
+- Pour implémenter des animations et interactions utilisateur
+- Pour optimiser l'expérience utilisateur et l'accessibilité
+
+## Requirements
+- Utiliser ce template pour structurer les demandes de design ou style
+- Inclure les fichiers concernés avec @filename ou @path
+- Fournir des spécifications précises (couleurs, tailles, espacements, etc.)
+- Joindre des références visuelles via des URLs ou des captures d'écran
+- Spécifier les frameworks et bibliothèques à utiliser
+- Inclure des critères d'accessibilité et de responsive design
+
+## Template
+
+```
+@[chemins des fichiers concernés ou à créer]
+
+**CONTEXTE ET OBJECTIF**:
+[Description claire du contexte et de l'objectif du design]
+
+**COMPOSANTS VISUELS À CRÉER/MODIFIER**:
+[Liste précise des éléments UI et leurs caractéristiques]
+
+**SPÉCIFICATIONS TECHNIQUES**:
+- Framework: [React/Vue/Angular/etc.]
+- Bibliothèques de style: [Emotion/Tailwind/Styled-Components/etc.]
+- Compatibilité navigateurs: [Chrome, Firefox, Safari, etc.]
+- Support mobile: [Oui/Non, breakpoints spécifiques]
+
+**SPÉCIFICATIONS VISUELLES**:
+- Couleurs: [Codes HEX/RGB précis ou référence au système de design]
+- Typographie: [Famille, taille, poids, interlignage]
+- Espacement: [Padding, margin, gap en px/rem/em]
+- Bordures: [Épaisseur, style, rayon]
+- Ombres: [Valeurs précises ou références]
+
+**RÉFÉRENCES DESIGN**:
+- Figma: [URL ou spécifications copiées]
+- Composants existants: [Références à des composants similaires]
+- Captures d'écran: [Jointes au chat ou URLs]
+- Design system: [Référence aux tokens ou guidelines]
+
+**INTERACTIONS ET ÉTATS**:
+- États du composant: [Normal, Hover, Focus, Active, Disabled]
+- Animations: [Description des transitions et comportements]
+- Feedback utilisateur: [Indices visuels, messages]
+
+**ACCESSIBILITÉ**:
+- Niveau WCAG visé: [AA/AAA]
+- Contraste: [Ratio minimum]
+- Navigation clavier: [Comportement attendu]
+- Support lecteur d'écran: [Attributs aria, rôles]
+
+**RESPONSIVE DESIGN**:
+- Desktop: [Comportement et dimensions]
+- Tablette: [Comportement et dimensions]
+- Mobile: [Comportement et dimensions]
+- Adaptations spécifiques: [Changements selon taille d'écran]
+
+**CRITÈRES D'ACCEPTATION**:
+- Fidélité visuelle: [Écart acceptable avec la maquette]
+- Performance: [Temps de chargement, fluidité des animations]
+- Tests browser/device: [Liste des environnements à supporter]
+```
+
+## Examples
+<example>
+@components/Card/Card.tsx @components/Card/Card.styles.ts @theme/colors.ts
+
+**CONTEXTE ET OBJECTIF**:
+Créer un composant de carte produit responsive qui affiche une image, un titre, un prix et un bouton d'action. Ce composant sera utilisé sur la page d'accueil et dans les résultats de recherche. Il doit s'intégrer au design system existant tout en apportant une touche moderne.
+
+**COMPOSANTS VISUELS À CRÉER/MODIFIER**:
+- Conteneur principal avec effet d'élévation
+- Zone d'image avec gestion des ratios et fallback
+- Section titre avec ellipsis pour texte trop long
+- Badge de prix avec formatage monétaire
+- Bouton d'action "Ajouter au panier"
+- Indicateur de promotion (optionnel)
+
+**SPÉCIFICATIONS TECHNIQUES**:
+- Framework: React avec TypeScript
+- Bibliothèques de style: Emotion (@emotion/native)
+- Compatibilité navigateurs: Chrome, Firefox, Safari, Edge
+- Support mobile: Oui, breakpoints à 768px et 480px
+
+**SPÉCIFICATIONS VISUELLES**:
+- Couleurs: 
+  - Fond: theme.color.surface
+  - Texte: theme.color.text
+  - Prix: theme.color.primary
+  - Bouton: theme.color.cta
+- Typographie:
+  - Titre: theme.fontSize.lg, theme.fontWeight.bold
+  - Prix: theme.fontSize.xl, theme.fontWeight.semiBold
+  - Bouton: theme.fontSize.md
+- Espacement:
+  - Padding interne: theme.spaceSize(2)
+  - Gap entre éléments: theme.spaceSize(1.5)
+- Bordures:
+  - Rayon: theme.borderRadius.md
+  - Séparateur: 1px solid theme.color.border
+- Ombres: boxShadow: theme.shadows.medium
+
+**RÉFÉRENCES DESIGN**:
+- Figma: https://figma.com/file/abc123/E-commerce (composant "ProductCard")
+- Composants existants: Voir CartItem.tsx pour le style des prix
+- Captures d'écran: [Image jointe au chat]
+- Design system: Utiliser les tokens définis dans theme/index.ts
+
+**INTERACTIONS ET ÉTATS**:
+- États du composant:
+  - Normal: Opacité 1, ombre standard
+  - Hover: Scale 1.02, ombre augmentée
+  - Focus: Outline bleu accessibilité
+  - Disabled: Opacité 0.6, curseur non-disponible
+- Animations:
+  - Transition douce au hover (200ms ease-out)
+  - Animation subtile au chargement (fade-in)
+- Feedback utilisateur:
+  - Effet "press" sur le bouton
+  - Toast de confirmation après ajout au panier
+
+**ACCESSIBILITÉ**:
+- Niveau WCAG visé: AA
+- Contraste: Ratio minimum 4.5:1 pour tout texte
+- Navigation clavier: Focus visible et ordre logique
+- Support lecteur d'écran: Alt pour images, aria-label pour boutons
+
+**RESPONSIVE DESIGN**:
+- Desktop: 3 cartes par ligne, taille fixe 300px
+- Tablette: 2 cartes par ligne, largeur 45%
+- Mobile: 1 carte par ligne, largeur 100% - 32px
+- Adaptations spécifiques: 
+  - Image plus petite sur mobile
+  - Badge prix repositionné sur petits écrans
+
+**CRITÈRES D'ACCEPTATION**:
+- Fidélité visuelle: Correspondance à 95% avec la maquette Figma
+- Performance: Temps de chargement < 100ms, animations à 60fps
+- Tests browser/device: Validation sur Chrome/Safari/Firefox + iPhone/Android
+</example>
+
+<example type="invalid">
+@components/Button.tsx
+
+Je voudrais un bouton plus moderne. Quelque chose avec du bleu et des coins arrondis. Il devrait changer quand on passe la souris dessus. Et qu'il fonctionne aussi sur mobile.
+</example>
+
+## Bonnes pratiques pour Cursor Composer
+
+### 1. Configuration des Rules for AI
+Configurez des règles personnalisées dans les paramètres de Cursor pour que l'IA respecte systématiquement vos conventions de design:
+- Style de code cohérent
+- Usage des tokens du design system
+- Conventions de nommage
+- Standards d'accessibilité
+
+### 2. Intégration avec Figma
+- Copiez directement les spécifications depuis Figma
+- Joignez des captures d'écran dans le chat Cursor
+- Utilisez des plugins comme "Figma to Cursor" pour extraire les styles
+
+### 3. Référence au contexte existant
+- Mentionnez les composants similaires avec @filename
+- Pointez vers les fichiers de thème et de styles globaux
+- Référencez la documentation du design system
+
+### 4. Itération efficace
+- Commencez par un prompt basique et affinez progressivement
+- Utilisez le mode Agent pour générer du contexte automatiquement
+- Alternez entre génération complète et édition ciblée
+
+### 5. Vérification et test
+- Testez le rendu sur différentes tailles d'écran
+- Validez l'accessibilité avec des outils automatisés
+- Vérifiez la cohérence avec le design system existant 
