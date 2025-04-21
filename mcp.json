@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "supabase": {
+      "command": "supabase-mcp-server",
+      "args": []
+    },
+    "official supabase": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "postgresql://postgres.ebjqjjescsurmxsvatuk:Gold%20Swiss%20Bird%20Hacker%20Petrol@aws-0-eu-west-2.pooler.supabase.com:5432/postgres"
+      ]
+    },
+    "figma": {
+      "type": "sse",
+      "url": "http://localhost:3333/sse"
+    }
+  }
+}
