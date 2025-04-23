@@ -23,6 +23,7 @@ alwaysApply: true
 - Typer les props des composants styled avec TypeScript
 - Organiser les styles en composants réutilisables
 - Favoriser la composition de composants plutôt que la duplication de styles
+- Toujours déclarer les composants styled sous le composant react concerné
 
 ## Structure recommandée
 
