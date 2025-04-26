@@ -1,21 +1,26 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
 # Task List Management
 
 ## Description
-Ce fichier définit les règles pour gérer la liste des tâches dans le dossier `task_manager`. Il guide l'agent IA de Cursor pour suivre, mettre à jour et documenter les tâches d'un projet, en suivant le pattern "Task Manager" pour un plan à long terme.
+Ce fichier définit les règles pour gérer la liste des tâches dans le dossier `./tasks`. Il guide l'agent IA de Cursor pour suivre, mettre à jour et documenter les tâches d'un projet, en suivant le pattern "Task Manager" pour un plan à long terme.
 
 ## Emplacement des fichiers
-1. **Tous les fichiers de gestion de tâches doivent être créés dans le dossier `task_manager`**
-   - Créer un sous-dossier dans `task_manager` pour chaque projet ou fonctionnalité (ex: `task_manager/create-beeven-scan/`)
-   - Placer le fichier principal `tasks.md` et les fichiers connexes dans ce sous-dossier
+1. **Tous les fichiers de gestion de tâches doivent être créés dans le dossier `tasks`**
+   - Si absent, créer un dossier `./tasks`.
+   - Pour chaque fonctionnalite creer un fichier dans le dossier `tasks`, avec `FEATURE_NAME`
    - Respecter l'arborescence existante : jamais créer de fichiers à la racine du projet
 
 2. **Vérification systématique du Task Manager**
-   - Au début de chaque session, vérifier le dossier `task_manager` pour identifier les projets en cours
-   - Consulter les fichiers `tasks.md` dans les sous-dossiers pour connaître l'état des tâches
+   - Au début de chaque session, vérifier le dossier `./tasks` pour identifier les projets en cours
+   - Consulter les fichiers `tasks` dans les sous-dossiers pour connaître l'état des tâches
    - Toujours se référer aux tâches existantes avant d'en proposer de nouvelles
 
-## Structure du fichier tasks.md
-1. Créez un fichier Markdown nommé `tasks.md` dans le sous-dossier approprié du dossier `task_manager` :
+## Structure du fichier FEATURE_NAME
+1. Créez un fichier Markdown nommé `tasks` dans le sous-dossier approprié du dossier `./tasks` :
    - Ajoutez un titre clair (ex. `# Liste des tâches`) et une brève description du projet ou de la fonctionnalité.
 2. Structurez le fichier avec ces sections :
    - `## À faire` : Tâches non commencées.
@@ -44,14 +49,14 @@ Ce fichier définit les règles pour gérer la liste des tâches dans le dossier
 
 ## Instructions pour l'IA
 Lorsque l'IA travaille avec la liste des tâches, elle doit :
-1. **TOUJOURS** vérifier d'abord dans le dossier `task_manager` si un projet correspondant existe déjà
-2. Si un projet existe, consulter le fichier `tasks.md` correspondant pour :
+1. **TOUJOURS** vérifier d'abord dans le dossier `./tasks` si un projet correspondant existe déjà
+2. Si un projet existe, consulter le fichier `tasks` correspondant pour :
    - Identifier les tâches en cours et leur priorité
    - Comprendre l'architecture globale du projet
    - Se familiariser avec les fichiers pertinents
 3. Si un nouveau projet est créé :
-   - Créer un nouveau sous-dossier dans `task_manager` avec un nom significatif
-   - Initialiser un fichier `tasks.md` avec la structure recommandée
+   - Créer un nouveau sous-dossier dans `./tasks` avec un nom significatif
+   - Initialiser un fichier `tasks` avec la structure recommandée
    - Éventuellement créer un fichier de planification détaillé (comme `create-beeven-scan.md`)
 4. Pour chaque session de travail :
    - Mettre à jour le statut des tâches dans le fichier approprié
@@ -60,21 +65,18 @@ Lorsque l'IA travaille avec la liste des tâches, elle doit :
 
 ## Exemple de structure pour un sous-dossier de projet
 ```
-/task_manager
+/./tasks
   /create-beeven-scan
-    tasks.md          # Liste des tâches avec leur statut
     create-beeven-scan.md  # Documentation détaillée du projet
   /refactor-auth
-    tasks.md
     auth-architecture.md
 ```
 
-## Exemple de contenu pour `tasks.md`
 ```markdown
-# Projet X - Liste des Tâches
+# Feature X - Liste des Tâches
 
 ## 🚀 Vue d'ensemble
-Description concise du projet X.
+Description concise de la feature X.
 
 ## À faire
 - [ ] Tâche 1
@@ -92,4 +94,4 @@ Description concise du projet X.
 
 ## 🔧 Détails d'implémentation
 Architecture et choix techniques pour le projet X.
-``` 
+``` %
