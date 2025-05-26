@@ -1,0 +1,7 @@
+Conciseness : Viser des règles courtes et ciblées, idéalement sous la barre des 500 lignes.   
+Spécificité et Actionnabilité : Fournir des instructions précises et directement applicables. Éviter les directives vagues ou ambiguës.   
+Exemples Concrets : Illustrer les points importants avec des exemples de code courts ou en référençant des fichiers pertinents via la syntaxe @nomDeFichier.   
+Modularité et Composabilité : Décomposer les concepts complexes ou les ensembles de standards volumineux en plusieurs règles plus petites et composables. Cela facilite la maintenance et la réutilisation.   
+Réutilisation : Identifier les prompts ou les instructions qui sont répétés fréquemment dans les interactions avec le chat et les transformer en règles réutilisables.   
+Clarté Documentaire : Rédiger les règles comme s'il s'agissait d'une documentation interne claire et bien structurée.   
+Principes de Conception Solides : S'inspirer des principes SOLID peut améliorer la focalisation de Cursor. Par exemple, le Principe de Responsabilité Unique (SRP), appliqué à la structuration du code, peut aider l'IA à mieux cibler ses interventions.   
